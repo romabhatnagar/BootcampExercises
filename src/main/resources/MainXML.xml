@@ -1,0 +1,72 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+    <bean id="database" class="com.ttn.spring.Database" scope="prototype">
+        <property name="name" value="mysql"></property>
+        <property name="port" value="3306"></property>
+    </bean>
+
+    <bean id="tea" class="com.ttn.spring.Tea"></bean>
+
+    <bean id="teaRestaurant" class="com.ttn.spring.Restaurant">
+        <property name="hotDrink" ref="tea"></property>
+    </bean>
+
+    <bean id="expressTea" class="com.ttn.spring.ExpressTea"></bean>
+
+    <!--inner bean-->
+    <bean name="expTea" class="com.ttn.spring.Restaurant">
+        <property name="hotDrink" ref="expressTea"></property>
+
+    </bean>
+
+    <!--uncomment for required-->
+    <!--<bean name="expTea1" class="com.ttn.spring.Restaurant">
+
+    </bean>-->
+
+    <bean id="hotDrink" class="com.ttn.spring.Tea"/>
+
+    <!--uncomment for autowire-->
+    <!--<bean id="restaurant" class="com.ttn.spring.Restaurant" autowire="byName"/>-->
+
+    <!-- uncomment for autowire by type and have only a single type of hotDrink bean
+    <bean id="restaurant" class="com.ttn.spring.Restaurant" autowire="byType" />-->
+
+    <!-- uncomment for autowire by constructor
+    <bean id="restaurant" class="com.ttn.spring.Restaurant" autowire="constructor"/>-->
+
+    <!---complex bean-->
+    <bean id="complexBean" class="com.ttn.spring.Complex">
+        <property name="list">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+                <value>4</value>
+            </list>
+        </property>
+
+        <property name="map">
+            <map>
+                <entry key="1" value="Linux"></entry>
+                <entry key="2" value="Git"></entry>
+                <entry key="3" value="Java"></entry>
+            </map>
+        </property>
+
+        <property name="set">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>2</value>
+                <value>4</value>
+            </set>
+        </property>
+    </bean>
+</beans>
