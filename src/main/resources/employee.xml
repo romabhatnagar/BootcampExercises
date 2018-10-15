@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+    <aop:aspectj-autoproxy/>
+
+    <bean id="employee"
+          class="com.ttn.spring.exercise.springaop.Employee">
+        <property name="name" value="Roma"></property>
+        <property name="employeeId" value="3035"></property>
+        <property name="salary" value="15000"></property>
+    </bean>
+
+    <bean id="employee2"
+          class="com.ttn.spring.exercise.springaop.Employee">
+        <property name="name" value="Richa"></property>
+        <property name="employeeId" value="3935"></property>
+        <property name="salary" value="15000"></property>
+    </bean>
+
+    <bean class="com.ttn.spring.exercise.springaop.EmployeeAspect"/>
+</beans>
