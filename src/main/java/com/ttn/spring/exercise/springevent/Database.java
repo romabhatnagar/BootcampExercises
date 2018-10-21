@@ -8,6 +8,15 @@ public class Database implements ApplicationEventPublisherAware {
     private String name;
     ApplicationEventPublisher applicationEventPublisher;
 
+    public Database() {
+    }
+
+   /* public Database(int port, String name, ApplicationEventPublisher applicationEventPublisher) {
+        this.port = port;
+        this.name = name;
+        this.applicationEventPublisher = applicationEventPublisher;
+    }*/
+
     public int getPort() {
         return port;
     }
@@ -24,6 +33,12 @@ public class Database implements ApplicationEventPublisherAware {
         this.name = name;
     }
 
+    @Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    //    Question 8
     void connect() {
         CustomEvent customEvent = new CustomEvent(this);
         applicationEventPublisher.publishEvent(customEvent);
@@ -44,10 +59,5 @@ public class Database implements ApplicationEventPublisherAware {
                 "port=" + port +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    @Override
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
     }
 }

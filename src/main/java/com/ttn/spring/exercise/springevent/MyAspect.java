@@ -5,6 +5,23 @@ import org.aspectj.lang.annotation.*;
 
 @Aspect
 class MyAspect {
+
+    //Question 10
+    @Before("execution(* com.ttn.spring.exercise.springaop.*())")
+    void LogAll() {
+        System.out.println("before advice is running");
+    }
+
+    @Before("execution(void *())")
+    void before() {
+        System.out.println("Running before advice..");
+    }
+
+    @Before("execution(* *(..))")
+    void beforeAll() {
+        System.out.println("Running before advice for all");
+    }
+
     @Before("execution(void connect())")
     void beforeAdvice() {
         System.out.println("Before advice is running for connect method of database");

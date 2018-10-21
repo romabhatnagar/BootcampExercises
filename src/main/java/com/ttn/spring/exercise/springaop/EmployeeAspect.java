@@ -9,6 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class EmployeeAspect {
 
+    //Question 9
     @Before("execution(void displayEmployeeDetails())")
     void beforeAdvice() {
         System.out.println("Before advice is running ");
@@ -29,14 +30,22 @@ public class EmployeeAspect {
         System.out.println("logging all....");
     }
 
+    //Question 1
     @Before("execution(* com.ttn.spring.exercise.springaop.Employee.getName())")
     public void logBeforeGetName(JoinPoint joinPoint) {
         System.out.println("log before getName() : " + joinPoint.getSignature().getName());
     }
 
+    //Question 2
     @Before("execution(* com.ttn.spring.exercise.springaop.Employee.getEmployeeId())")
     public void logBeforeGetEmployeeId(JoinPoint joinPoint) {
         System.out.println("log before getEmployeeId() : " + joinPoint.getSignature().getName());
+    }
+
+    //Question 2
+    @After("execution(* com.ttn.spring.exercise.springaop.Employee.getEmployeeId())")
+    public void logAfterGetEmployeeId(JoinPoint joinPoint) {
+        System.out.println("log after getEmployeeId() : " + joinPoint.getSignature().getName());
     }
 
     @Before("execution(* com.ttn.spring.exercise.springaop.Employee.getSalary())")
@@ -44,38 +53,65 @@ public class EmployeeAspect {
         System.out.println("log before getSalary() : " + joinPoint.getSignature().getName());
     }
 
+    //Question 3
     @AfterThrowing(pointcut = "execution(void throwIOException())", throwing = "ex")
     void afterThrowingIO(Exception ex) {
         System.out.println("Running AfterThrowing " + ex);
     }
 
+    //Question 4
     @Before("bean(employee2))")
     void beforeAdviceEmployee() {
         System.out.println("Running before advice of employee2");
     }
 
+    //Question 4
     @Before("within(com.ttn.spring.exercise.springaop.*)")
     void before() {
         System.out.println("Running before advice from within");
     }
 
+    //Question 4
     @Before("this(com.ttn.spring.exercise.springaop.Employee)")
     void beforeRun() {
         System.out.println("Running before advice from this");
     }
 
+    //Question 4
     @After("bean(employee2))")
     void AfterAdviceEmployee() {
         System.out.println("Running before advice of employee2");
     }
 
-    @After("within(com.ttn.spring.exercise.springaop.*)")
-    void after() {
-        System.out.println("Running before advice from within");
-    }
-
+    //Question 4
     @After("this(com.ttn.spring.exercise.springaop.Employee)")
     void AfterRun() {
         System.out.println("Running before advice from this");
+    }
+
+    // Q5
+    @Pointcut("execution(public void display())")
+    public void displayPointCut() {
+    }
+
+    //Q5
+    @After("displayPointCut()")
+    public void runningAfterDisplayPointCut() {
+        System.out.println("running After Display PointCut");
+    }
+
+    //Q6
+    @Before("execution(Integer getInteger(Integer))")
+    void beforeAdvice(JoinPoint joinPoint) {
+        System.out.println("------------------------------------");
+        System.out.println("Running before advice in JoinPoint");
+        System.out.println(joinPoint);
+        System.out.println(joinPoint.getThis());
+        System.out.println(joinPoint.getSignature());
+        Object[] objects = joinPoint.getArgs();
+        for (Object object : objects) {
+            System.out.println(object);
+        }
+        System.out.println("#######################################");
     }
 }

@@ -4,11 +4,12 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
-    <aop:aspectj-autoproxy/>
+
+
     <bean class="com.ttn.spring.exercise.springevent.Database">
         <property name="port" value="3036"></property>
         <property name="name" value="mysql"></property>
+
     </bean>
 
     <bean class="com.ttn.spring.exercise.springevent.Listener"/>

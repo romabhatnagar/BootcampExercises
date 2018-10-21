@@ -49,4 +49,8 @@ class Employee {
     void getStringPointcut() {
     }
 
+    Integer getInteger(Integer a) {
+        return a;
+    }
+
 }

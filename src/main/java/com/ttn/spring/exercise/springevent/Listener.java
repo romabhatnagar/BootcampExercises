@@ -8,3 +8,4 @@ public class Listener implements ApplicationListener<CustomEvent> {
         System.out.println("This event is fired by :" + event.getSource());
     }
 }
+

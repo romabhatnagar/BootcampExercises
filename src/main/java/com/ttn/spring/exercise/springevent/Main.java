@@ -1,6 +1,7 @@
 package com.ttn.spring.exercise.springevent;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
@@ -11,5 +12,11 @@ public class Main {
         database.connect();
         System.out.println("Connection closed ?" + database.closeConnection());
         database.throwException();
+
+        ConfigurableApplicationContext configurableApplicationContext = new ClassPathXmlApplicationContext("databaseConfig.xml");
+        configurableApplicationContext.refresh();
+        configurableApplicationContext.start();
+        configurableApplicationContext.stop();
+        configurableApplicationContext.close();
     }
 }
