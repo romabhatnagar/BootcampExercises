@@ -12,6 +12,7 @@ public class Main {
         employee.getName();
         employee.getEmployeeId();
         employee.getSalary();
+        employee.getInteger(100);
         // employee.throwExcepion();
         //employee.throwIOException();
 

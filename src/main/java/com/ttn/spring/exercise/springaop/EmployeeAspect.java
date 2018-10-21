@@ -12,6 +12,7 @@ public class EmployeeAspect {
     //Question 9
     @Before("execution(void displayEmployeeDetails())")
     void beforeAdvice() {
+
         System.out.println("Before advice is running ");
     }
 
@@ -22,11 +23,13 @@ public class EmployeeAspect {
 
     @AfterThrowing(pointcut = "execution(void throwException())", throwing = "ex")
     void afterReturningAdvice(Exception ex) {
+
         System.out.println("Running AfterThrowing " + ex);
     }
 
     @AfterReturning(pointcut = "execution(* com.ttn.spring.exercise.springaop.Employee.*())")
     void logAll() {
+
         System.out.println("logging all....");
     }
 
@@ -56,62 +59,70 @@ public class EmployeeAspect {
     //Question 3
     @AfterThrowing(pointcut = "execution(void throwIOException())", throwing = "ex")
     void afterThrowingIO(Exception ex) {
+
         System.out.println("Running AfterThrowing " + ex);
     }
 
     //Question 4
     @Before("bean(employee2))")
     void beforeAdviceEmployee() {
+
         System.out.println("Running before advice of employee2");
     }
 
     //Question 4
     @Before("within(com.ttn.spring.exercise.springaop.*)")
     void before() {
+
         System.out.println("Running before advice from within");
     }
 
     //Question 4
     @Before("this(com.ttn.spring.exercise.springaop.Employee)")
     void beforeRun() {
+
         System.out.println("Running before advice from this");
     }
 
     //Question 4
     @After("bean(employee2))")
     void AfterAdviceEmployee() {
+
         System.out.println("Running before advice of employee2");
     }
 
     //Question 4
     @After("this(com.ttn.spring.exercise.springaop.Employee)")
     void AfterRun() {
+
         System.out.println("Running before advice from this");
     }
 
-    // Q5
+
     @Pointcut("execution(public void display())")
     public void displayPointCut() {
+        System.out.println("hii");
     }
 
-    //Q5
-    @After("displayPointCut()")
+
+    @Before("displayPointCut()")
     public void runningAfterDisplayPointCut() {
+
         System.out.println("running After Display PointCut");
     }
 
     //Q6
     @Before("execution(Integer getInteger(Integer))")
     void beforeAdvice(JoinPoint joinPoint) {
-        System.out.println("------------------------------------");
+        System.out.println("---------------------");
         System.out.println("Running before advice in JoinPoint");
         System.out.println(joinPoint);
-        System.out.println(joinPoint.getThis());
-        System.out.println(joinPoint.getSignature());
+        System.out.println("get this " + joinPoint.getThis());
+        System.out.println("get signature " + joinPoint.getSignature());
         Object[] objects = joinPoint.getArgs();
         for (Object object : objects) {
             System.out.println(object);
         }
-        System.out.println("#######################################");
+        System.out.println("----------");
     }
 }

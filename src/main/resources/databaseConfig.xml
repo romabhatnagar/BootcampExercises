@@ -16,4 +16,6 @@
 
     <bean class="com.ttn.spring.exercise.springevent.MyAspect"/>
 
+    <bean class="com.ttn.spring.exercise.Q7.MultiEventListener"></bean>
+
 </beans>
