@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/spring_demo</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">igdefault</property>
+
+        <!--JDBC connection pool-->
+        <property name="connection.pool_size">10</property>
+
+        <!-- SQL Dialect-->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!--echo all executed SQL-->
+        <property name="show_sql">true</property>
+
+        <!--uncommenet for q4-->
+        <!--<property name="hbm2ddl.auto">update</property>-->
+
+        <!--uncomment for q5-->
+        <property name="create-drop">update</property>
+
+        <!--drop or re-create database schema at startup-->
+        <!--<property name="hbm2ddl.auto">create-drop</property>-->
+
+        <!--Annotated entity class-->
+        <mapping class="Entity.Author"/>
+        <mapping class="Q6.Author1"/>
+        <mapping class="Q7.Author2"/>
+        <mapping class="Q3.Author3"/>
+        <mapping class="Q10_11.Author10"/>
+        <mapping class="Q10_11.Address"/>
+        <mapping class="Q12.Author12"/>
+        <mapping class="Q14_15.Author15"/>
+        <mapping class="Q17.Author16"/>
+        <mapping class="Q17.Book16"/>
+        <mapping class="Q14_15.Book"/>
+        <mapping class="Q16Unidirectional.Author16"/>
+        <mapping class="Q16Unidirectional.Book16"/>
+        <mapping class="Q16Bidirectional.Author16"/>
+        <mapping class="Q16Bidirectional.Book16"/>
+        <mapping class="Q16WithoutTable.Author16"/>
+        <mapping class="Q16WithoutTable.Book16"/>
+        <mapping class="Q16Cacsade.Person"/>
+        <mapping class="Q16Cacsade.Vehicle"/>
+
+    </session-factory>
+</hibernate-configuration>
