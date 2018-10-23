@@ -1,0 +1,22 @@
+<!--Create an Employee registration form and bind it's requested values on the controller.-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <!--<link th:href="@{'/stylesheets/application.css'}" rel="stylesheet" />-->
+</head>
+<body>
+<form th:action="@{'/employeesubmit'}" th:object="${employee}" method="post">
+
+    <p>ID:<input type="text" th:field="*{id}"></p>
+    <p>Name:<input type="text" th:field="*{name}"></p>
+    <p>Age:<input type="text" th:field="*{age}"></p>
+    <p>Salary:<input type="number" th:field="*{salary}"></p>
+    <input type="radio" name="admin" th:field="*{admin}" value="true">Yes I am admin<br>
+    <input type="radio" name="admin" th:field="*{admin}" value="false">No<br>
+    <input type="submit" value="Register">
+
+</form>
+</body>
+</html>

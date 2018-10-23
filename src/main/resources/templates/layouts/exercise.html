@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding JS FIle</title>
+
+    <!--question 2-->
+    <script th:src="@{'/javascript/application.js'}"></script>
+    <link th:href="@{'/stylesheets/application.css'}" rel="stylesheet"/>
+</head>
+<body>
+<header th:insert="layouts/index.html :: header"></header>
+<div class="container">
+    <aside>
+        <h4>This is side bar</h4>
+
+    </aside>
+    <div>
+        <button onclick="throwalert()">Click</button>
+    </div>
+    <div>
+        <p>Hello world!!!!</p>
+    </div>
+    <div th:replace="layouts/index.html :: footer"></div>
+</div>
+</body>
+</html>

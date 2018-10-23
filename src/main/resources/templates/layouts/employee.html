@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--th:with="${emp.admin=${true}}"-->
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Salary</td>
+    </tr>
+    <tr th:each="emp:${employee}">
+        <td th:text="${emp.id}"></td>
+        <td th:text="${emp.name}"></td>
+        <td th:text="${emp.age}"></td>
+        <td th:text="${emp.salary}"></td>
+        <!--<td th:if="${emp.admin}">Hello Admin</td>-->
+        <td>
+            <span th:if="${emp.admin}">Hello Admin</span>
+            <span th:unless="${emp.admin}">Hello user</span>
+        </td>
+
+    </tr>
+</table>
+</body>
+</html>

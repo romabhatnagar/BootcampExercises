@@ -1,0 +1,35 @@
+<!--Create a user listing table show alternate row color using a conditional tag.-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+</head>
+<body>
+<table th:cellpadding="10px" th:cellspacing="10px" th:border="solid">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Admin</td>
+        <td>Salary</td>
+    </tr>
+
+
+    <tr th:each="user, iterStat:${users}" th:style="${iterStat.odd}? 'background: #f0f0f2;' : 'background: #ffffff;'">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.admin}"></td>
+        <td th:text="${user.salary}"></td>
+    </tr>
+
+    <!--q9-->
+    <select>
+        <option th:each="role: ${T(com.ttn.spring.Thymleaf.enums.Role).values()}"
+                th:value="${role.getValue()}" th:text="${role.getValue()}">
+        </option>
+    </select>
+</table>
+
+
+</body>
+</html>

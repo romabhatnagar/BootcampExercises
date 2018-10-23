@@ -1,0 +1,27 @@
+<!--Practice Done in class-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Thymeleaf</title>
+    <script th:src="@{'/javascript/application.js'}"></script>
+    <link th:href="@{'/stylesheets/application.css'}" rel="stylesheet">
+
+</head>
+<body th:with="var=${({1,2,3})}">
+<div class="container">
+    Hello Thymeleaf
+</div>
+<div th:if="${var}">
+    hey how are you!!
+</div>
+<table>
+    <tr th:each="i, iterstat:${var}" class="row" th:classappend="${iterstat.count}? 'odd'">
+        <td th:text="${i}">.</td>
+
+    </tr>
+</table>
+
+</body>
+</html>
