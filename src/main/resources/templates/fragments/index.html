@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page with header and footer</title>
+    <link th:href="@{'/stylesheets/application.css'}" rel="stylesheet"/>
+</head>
+<body>
+<div th:include="fragments/header::header"></div>
+*******
+</div>
+<div th:include="fragments/footer::footer"></div>
+<p>-------</p>
+</div>
+</body>
+</html>

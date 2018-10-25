@@ -9,14 +9,12 @@ load till server return success form submission response.-->
 <title>This is the Loader Page</title>
 <!--<img class="load" th:src="@{'/images/Preload.gif'}">-->
 <link th:href="@{'/stylesheets/loader.css'}" rel="stylesheet"/>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script th:src="@{'/javascript/loader.js'}"></script>
 
 </head>
 <body>
 <div>
     <fieldset>
-        <form th:object="${employee}" method="get">
+        <form th:object="${employee}" method="post" action="employeesubmit">
 
             <p>ID:<input type="text" th:field="*{id}"></p>
             <p>Name:<input type="text" th:field="*{name}"></p>
@@ -27,10 +25,13 @@ load till server return success form submission response.-->
             </div>
 
             <div class="load">
-                <img th:src="@{'/images/Preload.gif'}" alt="image">
+                <img th:src="@{'/images/loader.gif'}" alt="image">
             </div>
         </form>
     </fieldset>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script th:src="@{'/javascript/loader.js'}"></script>
+
 </body>
 </html>

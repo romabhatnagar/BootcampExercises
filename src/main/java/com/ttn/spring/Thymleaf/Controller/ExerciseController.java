@@ -35,16 +35,24 @@ public class ExerciseController {
         return "layouts/employee";
     }
 
+
     //q10
     @GetMapping("/loader")
     public String register(Employee employee) {
-        return "layouts/loader";
+//        return "layouts/loader";
+        return "redirect:/employeesubmit";
     }
 
     //q7
     @GetMapping("/serverTime")
     public String showServerTime() {
         return "layouts/serverTime";
+    }
+
+    //q6
+    @GetMapping("/index")
+    public String showIndex() {
+        return "fragments/index";
     }
 
 }

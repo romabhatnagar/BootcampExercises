@@ -22,7 +22,7 @@
         <td th:text="${user.salary}"></td>
     </tr>
 
-    <!--q9-->
+    <!--q9 enum-->
     <select>
         <option th:each="role: ${T(com.ttn.spring.Thymleaf.enums.Role).values()}"
                 th:value="${role.getValue()}" th:text="${role.getValue()}">

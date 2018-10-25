@@ -1,6 +1,7 @@
 function showLoader() {
     //document.getElementById('image').show();
     $(".load").show();
+    /*  ('.load').wait(2000)*/
 }
 
 function hideLoader() {

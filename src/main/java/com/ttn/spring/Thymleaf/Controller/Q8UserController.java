@@ -18,7 +18,7 @@ public class Q8UserController {
         return "layouts/users";
     }
 
-    @GetMapping("/user")
+    //@GetMapping("/user")
     private List populateUsers() {
         List<User> users = Arrays.asList(new User(1L, "user1", true, 230000.0),
                 new User(2L, "user2", false, 2300.0),

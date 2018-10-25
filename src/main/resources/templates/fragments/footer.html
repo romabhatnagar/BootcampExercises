@@ -2,15 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Page with header and footer</title>
+    <title>Employee</title>
     <link th:href="@{'/stylesheets/application.css'}" rel="stylesheet"/>
 </head>
 <body>
-<div class="header" th:fragment="header">
-    This is header
-</div>
-<div class="footer" th:fragment="footer">
-    <p>This is Footer</p>
+<div th:fragment="footer">
+    Hi you are looking at Footer
 </div>
 </body>
 </html>
