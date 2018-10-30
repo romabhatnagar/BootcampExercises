@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="driverManagerDataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="igdefault"/>
+    </bean>
+    87
+
+    <bean id="singleDataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="igdefault"/>
+        <property name="suppressClose" value="true"/>
+    </bean>
+
+    <bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="igdefault"/>
+        <property name="initialSize" value="2"/>
+        <property name="maxTotal" value="5"/>
+    </bean>
+
+    <bean id="myBean1" class="Q1.Q3.SpringJDBC">
+        <constructor-arg ref="driverManagerDataSource"></constructor-arg>
+    </bean>
+
+    <bean id="myBean2" class="Q1.Q3.SpringJDBC">
+        <constructor-arg ref="singleDataSource"></constructor-arg>
+    </bean>
+
+    <bean id="myBean3" class="Q1.Q3.SpringJDBC">
+        <constructor-arg ref="basicDataSource"></constructor-arg>
+    </bean>
+</beans>

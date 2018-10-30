@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="igdefault"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="myBean4" class="Q2.CustomJDBCTemplate">
+        <constructor-arg ref="jdbcTemplate"></constructor-arg>
+    </bean>
+
+    <bean id="myBean5" class="Q2.User">
+        <property name="name" value="ujjwal"></property>
+        <property name="age" value="20"></property>
+        <property name="password" value="hello"></property>
+        <property name="username" value="ujjwal20"></property>
+        <property name="dob" value="1996-12-11"></property>
+    </bean>
+
+    <bean id="nameParameter"
+          class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean id="myBean6" class="Q2.NamedParameterDemo">
+        <constructor-arg ref="nameParameter"></constructor-arg>
+    </bean>
+</beans>

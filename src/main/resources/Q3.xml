@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="singleConnectionDataSource"
+          class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="igdefault"/>
+        <property name="suppressClose" value="true"/>
+    </bean>
+
+    <!--<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>-->
+    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+    <!--<property name="username" value="root"/>-->
+    <!--<property name="password" value="root"/>-->
+    <!--</bean>-->
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="singleConnectionDataSource"/>
+
+        <property name="packagesToScan" value="Q3"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="hibernateEx" class="Q3.HibernateEx">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+</beans>

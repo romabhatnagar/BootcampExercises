@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userServicePlatformTransaction" class="Q4.UserServicePlatformTransaction">
+        <constructor-arg ref="transactionManager"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="driverManagerDataSource"/>
+    </bean>
+    <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_demo"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="igdefault"/>
+    </bean>
+
+    <bean id="serviceImpl" class="Q4.UserServicePlatformTransaction">
+        <constructor-arg ref="transactionManager"/>
+    </bean>
+
+    <bean id="serviceImpl2" class="Q4.Q4_d.CustomerService">
+        <constructor-arg ref="transactionManager"/>
+    </bean>
+
+    <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="driverManagerDataSource"/>
+    </bean>
+    <bean id="userServicePlatformTransaction1" class="Q4.UserServicePlatformTransaction">
+        <constructor-arg ref="transactionManager1"/>
+    </bean>
+    <bean id="customerDAO" class="Q4.CustomerDAOImpl">
+        <constructor-arg ref="driverManagerDataSource"></constructor-arg>
+    </bean>
+
+    <bean id="customer" class="Q4.Customer">
+        <property name="name" value="customer1"></property>
+        <property name="address" ref="address"></property>
+        <property name="id" value="1"></property>
+    </bean>
+
+    <bean id="address" class="Q4.Address">
+        <property name="id" value="1"></property>
+        <property name="address" value="r67"></property>
+        <property name="country" value="india"></property>
+    </bean>
+
+    <bean id="customerDao" class="Q4.CustomerDAOImpl">
+        <constructor-arg ref="driverManagerDataSource"></constructor-arg>
+    </bean>
+
+    <bean class="Q4.Q4_d.CustomerManagerImpl">
+        <property name="customerDAO" ref="customerDao"></property>
+    </bean>
+
+</beans>
