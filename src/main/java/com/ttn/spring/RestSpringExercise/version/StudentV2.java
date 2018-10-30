@@ -1,4 +1,4 @@
-/*
+
 package com.ttn.spring.RestSpringExercise.version;
 
 public class StudentV2 {
@@ -17,4 +17,3 @@ public class StudentV2 {
         this.name = name;
     }
 }
-*/

@@ -16,4 +16,12 @@ public class RestSpringExerciseApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestSpringExerciseApplication.class, args);
     }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        source.setBasenames("i18n/messages");
+        source.setUseCodeAsDefaultMessage(true);
+        return source;
+    }
 }

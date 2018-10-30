@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @JsonIgnore
+    @JsonIgnore
     private int id;
 
     public int getId() {

@@ -1,5 +1,7 @@
 package com.ttn.spring.RestSpringExercise.exception;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
 @RestController
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @Autowired
+    MessageSource messageSource;
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(true));
@@ -31,7 +36,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
-/*    @Override
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errorMessageList=ex.getBindingResult().getAllErrors().stream().filter(e->e instanceof FieldError).map((e)->{
@@ -42,5 +47,5 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),"Validation Failed",errorMessageList.toString());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }*/
+    }
 }

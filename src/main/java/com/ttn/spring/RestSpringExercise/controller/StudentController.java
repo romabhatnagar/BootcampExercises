@@ -7,12 +7,16 @@ import com.ttn.spring.RestSpringExercise.exception.StudentException;
 import com.ttn.spring.RestSpringExercise.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,6 +26,7 @@ public class StudentController extends ResourceBundleMessageSource {
 
     @Autowired
     StudentService studentService;
+
     @Autowired
     MessageSource messageSource;
 
@@ -40,26 +45,6 @@ public class StudentController extends ResourceBundleMessageSource {
         return studentService.getStudentById(id);
     }
 
-
-    //q3 and 5
-    @PostMapping("/students")
-    Student student(@RequestBody Student student) {
-        studentService.saveStudent(student);
-        return student;
-    }
-
-    //q3
-   /* @PostMapping("/students")
-    ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student){
-        studentService.saveStudent(student);
-
-        URI uri= ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("{id}").buildAndExpand(student.getId()).toUri();
-
-        return ResponseEntity.created(uri).build();
-    }*/
-
     //q2
     @DeleteMapping("/students/{id}")
     public void deleteStudent(@PathVariable int id) {
@@ -71,25 +56,45 @@ public class StudentController extends ResourceBundleMessageSource {
         }
     }
 
+    //q3 and 5
+   /* @PostMapping("/students")
+    Student student(@RequestBody Student student) {
+        studentService.saveStudent(student);
+        return student;
+    }*/
+
+    //q3 n 5
+    @PostMapping("/students")
+    ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student){
+        studentService.saveStudent(student);
+
+        URI uri= ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("{id}").buildAndExpand(student.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
+
     //q4
     @GetMapping("/")
-    String hello(@RequestHeader(name = "Accept-Language", required = false) Locale locale) {
+    String hello() {
         System.out.println("hello");
-        System.out.println(locale.getLanguage());
-        return messageSource.getMessage("greeting.message", null, locale);
+//        System.out.println(locale.getLanguage());
+        return messageSource.getMessage("greeting.message", null, LocaleContextHolder.getLocale());
     }
 
     //q8
     @GetMapping("/post")
     public String getPost() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://jsonplaceholder.typicode.com/posts/1";
+        String url = "https://jsonplaceholder.typicode.com/posts";
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         System.out.println(response.getStatusCode().toString());
         System.out.println(response.getHeaders().toString());
         return response.getBody();
     }
 
+    //read object
     @GetMapping("/postObject")
     public Post getPostObject() {
         RestTemplate restTemplate = new RestTemplate();
@@ -100,6 +105,7 @@ public class StudentController extends ResourceBundleMessageSource {
         return response.getBody();
     }
 
+    //read list
     @GetMapping("/postList")
     public List<Post> getPostList() {
         RestTemplate restTemplate = new RestTemplate();
@@ -129,7 +135,7 @@ public class StudentController extends ResourceBundleMessageSource {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-type", "application/json; charset=UTF-8");
-        HttpEntity<Post> request = new HttpEntity<>(new Post(1L, 100L, "title1", "description1"), httpHeaders);
+        HttpEntity<Post> request = new HttpEntity<>(new Post(105L, 100L, "title1", "description1"), httpHeaders);
         return restTemplate.exchange(url, HttpMethod.PUT, request, Post.class);
     }
 
