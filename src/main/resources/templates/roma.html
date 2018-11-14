@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="../stylesheet/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../stylesheet/ionicons.min.css" rel="stylesheet"/>
+    <link href="../stylesheet/style.css" rel="stylesheet"/>
+</head>
+<body>
+<section class="section" name="Section1" style="padding-top: 30px; padding-bottom: 20px !important;">
+    <div class="container container-custom">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card" style="width: 55rem;">
+                    <div class="card-img-top card-header" style="background-color: #0e5a80;">
+                        <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i>
+                        Recongnize Karma
+
+                    </div>
+                    <div class="card-body">
+                        <form id="recognize-form" role="form" th:action="@{/dashboard}" th:object="${userRecognize}"
+                              class="form" method="post">
+                            <span class="card-text">
+                                <div class="input-group m-3" style="width:85%">
+                                    <div class="input-group-prepend" th:object="${recognize}">
+                                        <span class="input-group-text" id="basic-addon1"><img
+                                                src="../svg/si-glyph-person-2.svg"
+                                                class="glyphyicon"/></span>
+                                    </div>
+                                    <input type="text" class="form-control xs-3" placeholder="Username" name="firstname"
+                                           aria-label="Username" aria-describedby="basic-addon1">
+                                    <select style="margin-left:30px" name="countRecognize">
+                                        <option value="" selected> Select a Badge </option>
+	  	                                <option value="Gold"> Gold(2) </option>
+	  	                                <option value="Silver"> Silver(4) </option>
+                                        <option value="Bronze"> Bronze(6) </option>
+                                    </select>
+                                    <select style="margin-left:30px" name="karma">
+	                                    <option value="" selected> Select a Karma/Core Value </option>
+                                        <option value="Karma: Extra Miler">Karma: Extra Miler</option>
+                                        <option value="Karma: Knowledge Sharing">Karma: Knowledge Sharing</option>
+                                        <option value="Karma: Mentorship">Karma: Mentorship</option>
+                                        <option value="Karma: Pat on the back">Karma: Pat on the back</option>
+                                        <option value="Karma: Customer Delight">Karma: Customer Delight</option>
+                                        <option value="Core Value: Continuous Learning and Improvement">Core Value: Continuous Learning and Improvement</option>
+                                        <option value="Core Value: Contribution">Core Value: Contribution</option>
+                                        <option value="Core Value: Diligence<">Core Value: Diligence</option>
+                                        <option value="Core Value: Empathy">Core Value: Empathy</option>
+                                        <option value="Core Value: Openness to Feedback and Change">Core Value: Openness to Feedback and Change</option>
+                                        <option value="Core Value: Responsible Freedom">Core Value: Responsible Freedom</option>
+                                    </select>
+                                    </div>
+                            </span>
+                            <div stlye="font-weight:200;"> Reason</div>
+                            <textarea rows="3" cols="90" class="m-3" name="reason"> Please specify a reason! </textarea>
+                            <input type="Submit" value="Recognize" style="float:right !important;"
+                                   class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- col -->
+        </div><!-- row -->
+    </div>
+</section>
+</body>
+</html>

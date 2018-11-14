@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="../stylesheet/bootstrap.min.css"/>
+    <link href="../stylesheet/panelionicons.min.css" rel="stylesheet"/>
+    <link href="../stylesheet/panelstyle.css" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<!--<form method="post" action="/adminPanel">-->
+<div class="container">
+    <h2>Admin Panel</h2>
+    <div class="adminTopbar">
+        <!--   <input type="text" class="searchBox" placeholder="Search"/><span class="glyphicon glyphicon-search"></span>-->
+
+        <!--  <select class="adminBarMargin">
+              <option value="Admin"> Admin</option>
+              <option value="User"> User</option>
+              <option value="Supervisor"> Supervisor</option>
+              <option value="Practice Head"> Practice Head</option>
+          </select>-->
+
+        <!--       <input type="checkbox" name="ActiveUser" value="Active User" class="adminBarMargin"/> Active User-->
+
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Email</th>
+            <th>Available Points</th>
+            <th> Points Used</th>
+            <th align="center"> &nbsp; &nbsp; Badge Count <br/>
+                <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:gold;"> </i>
+                <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:silver;"> </i>
+                <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:brown;"> </i>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userDto: ${userDtoList}">
+            <td align="center" th:utext="${userDto.firstName}"></td>
+            <td align="center">
+                <div th:each="roleList: ${userDto.getRoleList()}">
+                    <div th:utext="${roleList.getRole()}"></div>
+                </div>
+                <!--   <select>
+                       <option value="Admin"> Admin</option>
+                       <option value="User"> User</option>
+                       <option value="Supervisor"> Supervisor</option>
+                       <option value="Practice Head"> Practice Head</option>
+                   </select>-->
+            </td>
+            <td align="center" th:utext="${userDto.getIsactive()}"></td>
+            <td align="center" th:utext="${userDto.email}"></td>
+            <td align="center"
+                th:utext="${userDto.getGold()*30}+${userDto.getSilver()*20}+${userDto.getBronze()*10}"></td>
+            <td align="center">0</td>
+            <td align="center">
+                <!--<tr>-->
+            <td align="center" th:utext="${userDto.gold}"></td>
+            <td align="center" th:utext="${userDto.silver}"></td>
+            <td align="center" th:utext="${userDto.bronze}"></td>
+            <!-- <input th:utext="${userDto.gold}" class = "PointsBox"/>
+             <input th:utext="${userDto.silver}" class = "PointsBox"/>
+             <input th:utext="${userDto.bronze}" class = "PointsBox"/>-->
+
+            <!--<td>
+                <span class="glyphicon glyphicon-trash form-control-feedback"></span>
+            </td>
+-->
+            <td>
+                <a th:href="@{'/deleteUser/{id}' (id=${userDto.getId()})}"
+                   class="edit">
+                    <span><i class="glyphicon glyphicon-trash"></i></span>
+
+                </a>
+
+            </td>
+            <td>
+                <a th:href="@{'/editUser/{id}' (id=${userDto.getId()})}"
+                   class="edit">
+                    <span><i class="glyphicon glyphicon-edit"></i></span>
+
+                </a>
+
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<!--</form>-->
+
+
+</body>
+</html>
