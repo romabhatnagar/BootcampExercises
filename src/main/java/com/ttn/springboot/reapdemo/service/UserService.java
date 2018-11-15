@@ -104,8 +104,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<Recognize> getRecognizeList() {
+ /*   public List<Recognize> getRecognizeList() {
         return userRepository.getList();
-    }
+    }*/
 
 }

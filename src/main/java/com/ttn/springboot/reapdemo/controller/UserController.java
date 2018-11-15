@@ -60,16 +60,13 @@ public class UserController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+    public String dashboard(HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         User user = (User) httpSession.getAttribute("userLoggedIn");
-
         if (user == null) {
             return "redirect:/login";
         }
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("dashboard");
-        return "redirect:/dashboard";
+        return "dashboard";
     }
 
     @Transactional
@@ -77,10 +74,10 @@ public class UserController {
     public String dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         redirectAttributes.addFlashAttribute("message", user);
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
-        List<Recognize> recognizeList = userService.getRecognizeList();
+//        List<Recognize> recognizeList = userService.getRecognizeList();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("dashboard");
-        modelAndView.addObject("recognizeList", recognizeList);
+//        modelAndView.addObject("recognizeList", recognizeList);
         userService.updateUserBadge(recognize, user, httpSession);
         userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
         return "redirect:/dashboard";
