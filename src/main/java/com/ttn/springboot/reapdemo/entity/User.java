@@ -12,9 +12,9 @@ public class User {
     private int id;
     private String email;
     @Column(name = "first_name")
-    private String firstname;
+    private String firstName;
     @Column(name = "last_name")
-    private String lastname;
+    private String lastName;
     private String password;
     @Column(name = "Is_Active", columnDefinition = "boolean default true", nullable = false)
     private Boolean isActive = true;
@@ -30,6 +30,22 @@ public class User {
     private Integer goldEarned;
     private Integer silverEarned;
     private Integer bronzeEarned;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public Integer getGoldEarned() {
         return goldEarned;
@@ -95,20 +111,12 @@ public class User {
         this.email = email;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
     }
 
     public String getPassword() {
@@ -132,10 +140,16 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", isActive=" + isActive +
+                ", roles=" + roles +
+                ", badgeList=" + badgeList +
+                ", recognizes=" + recognizes +
+                ", goldEarned=" + goldEarned +
+                ", silverEarned=" + silverEarned +
+                ", bronzeEarned=" + bronzeEarned +
                 '}';
     }
 }

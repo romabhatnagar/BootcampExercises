@@ -135,7 +135,7 @@ public class UserDTO {
         for (User user : userList) {
             UserDTO userDTO = new UserDTO();
             userDTO.setEmail(user.getEmail());
-            userDTO.setFirstName(user.getFirstname());
+            userDTO.setFirstName(user.getFirstName());
             userDTO.setBronze(user.getBadgeList().get(0).getCount());
             userDTO.setGold(user.getBadgeList().get(2).getCount());
             userDTO.setSilver(user.getBadgeList().get(1).getCount());

@@ -1,9 +1,6 @@
 package com.ttn.springboot.reapdemo.service;
 
-import com.ttn.springboot.reapdemo.entity.Badge;
-import com.ttn.springboot.reapdemo.entity.Recognize;
-import com.ttn.springboot.reapdemo.entity.Role;
-import com.ttn.springboot.reapdemo.entity.User;
+import com.ttn.springboot.reapdemo.entity.*;
 import com.ttn.springboot.reapdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +51,7 @@ public class UserService {
     }
 
     public User findByFirstName(String firstname) {
-        return userRepository.findByFirstname(firstname);
+        return userRepository.findByFirstName(firstname);
     }
 
    /* public void updateUserBadge(Badge badge, Integer counttoadd) {
@@ -63,7 +60,7 @@ public class UserService {
 
     public void updateUserBadge(Recognize recognize, User user, HttpSession httpSession) {
         String countRecognize = recognize.getCountRecognize();
-        User updateUser = findByFirstName(user.getFirstname());
+        User updateUser = findByFirstName(user.getFirstName());
         if (updateUser != null) {
             Integer updateUserId = updateUser.getId();
             Integer goldCount = updateUser.getGoldEarned();
@@ -106,4 +103,9 @@ public class UserService {
         });
         userRepository.save(user);
     }
+
+    public List<Recognize> getRecognizeList() {
+        return userRepository.getList();
+    }
+
 }

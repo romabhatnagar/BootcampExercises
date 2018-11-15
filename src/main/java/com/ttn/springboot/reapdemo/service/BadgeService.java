@@ -20,7 +20,7 @@ public class BadgeService {
     }
 
     public User findbyFirstName(String firstname) {
-        return userRepository.findByFirstname(firstname);
+        return userRepository.findByFirstName(firstname);
     }
 
     public List<Recognize> getBadgeList(Integer id) {

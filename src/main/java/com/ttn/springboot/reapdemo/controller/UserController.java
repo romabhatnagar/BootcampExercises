@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -38,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView afterLogin(@ModelAttribute("user") @Valid User user, HttpSession httpSession) {
+    public String afterLogin(@ModelAttribute("user") @Valid User user, HttpSession httpSession) {
         User user1 = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         ModelAndView modelAndView = new ModelAndView();
 
@@ -50,17 +52,24 @@ public class UserController {
             httpSession.setAttribute("userLoggedIn", user1);
             modelAndView.addObject("userData", user1);
             List<Badge> badgeList = getBadge(user1.getId());
-            System.out.println("id is" + user1.getId());
-            System.out.println(badgeList);
             modelAndView.addObject("userBadge", badgeList);
             modelAndView.setViewName("dashboard");
         }
-        return modelAndView;
+//        return modelAndView;
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard";
+    public String dashboard(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+        HttpSession httpSession = httpServletRequest.getSession();
+        User user = (User) httpSession.getAttribute("userLoggedIn");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("dashboard");
+        return "redirect:/dashboard";
     }
 
     @Transactional
@@ -68,6 +77,10 @@ public class UserController {
     public String dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         redirectAttributes.addFlashAttribute("message", user);
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+        List<Recognize> recognizeList = userService.getRecognizeList();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("dashboard");
+        modelAndView.addObject("recognizeList", recognizeList);
         userService.updateUserBadge(recognize, user, httpSession);
         userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
         return "redirect:/dashboard";
@@ -170,7 +183,7 @@ public class UserController {
 
     @GetMapping("/badgeList")
     public List<Recognize> getBadgeList(User user) {
-        User user1 = badgeService.findbyFirstName(user.getFirstname());
+        User user1 = badgeService.findbyFirstName(user.getFirstName());
         int userid = user1.getId();
         return badgeService.getBadgeList(userid);
     }
@@ -179,4 +192,5 @@ public class UserController {
     public String badge() {
         return "badgeIndex";
     }
+
 }

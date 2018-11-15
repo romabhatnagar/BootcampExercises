@@ -1,9 +1,6 @@
 package com.ttn.springboot.reapdemo.repository;
 
-import com.ttn.springboot.reapdemo.entity.Badge;
-import com.ttn.springboot.reapdemo.entity.Recognize;
-import com.ttn.springboot.reapdemo.entity.Role;
-import com.ttn.springboot.reapdemo.entity.User;
+import com.ttn.springboot.reapdemo.entity.*;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,7 +16,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findByEmail(String email);
 
-    User findByFirstname(String firstname);
+    User findByFirstName(String firstname);
 
     void deleteById(Integer id);
 
@@ -41,5 +38,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Modifying
     @Query(value = "update user u set u.isActive=:active,u.roles=:roles where u.id=:id", nativeQuery = true)
     void updateUser(@Param("id") Integer id, @Param("active") Boolean active, @Param("roles") List<Role> roles);
+
+    @Query("select r from Recognize r")
+    List<Recognize> getList();
+
 }
 
