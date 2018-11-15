@@ -27,8 +27,9 @@ public class BadgeService {
         return userRepository.getBadges(id);
     }
 
-    @Transactional
+   /* @Transactional
     public void updateRecognize(Integer recognizeid, String karma, String reason, String count) {
         userRepository.updateRecognize(recognizeid, karma, reason, count);
-    }
+    }*/
+
 }

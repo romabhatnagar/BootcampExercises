@@ -15,10 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView afterLogin(@ModelAttribute("user") @Valid User user) {
+    public ModelAndView afterLogin(@ModelAttribute("user") @Valid User user, HttpSession httpSession) {
         User user1 = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         ModelAndView modelAndView = new ModelAndView();
 
@@ -46,6 +47,7 @@ public class UserController {
         } else if (user1.getActive() == false) {
             modelAndView.addObject("message", "Sorry, this user is inactive");
         } else {
+            httpSession.setAttribute("userLoggedIn", user1);
             modelAndView.addObject("userData", user1);
             List<Badge> badgeList = getBadge(user1.getId());
             System.out.println("id is" + user1.getId());
@@ -58,53 +60,29 @@ public class UserController {
 
     @GetMapping("/dashboard")
     public String dashboard() {
-
         return "dashboard";
     }
 
     @Transactional
     @PostMapping("/dashboard")
-    public String dashboard(User user, Recognize recognize) {
-        List<Recognize> recognizes = getBadgeList(user);
-        String countRecognize = recognize.getCountRecognize();
-        Integer count = 0;
-
-        if (countRecognize.equals("Gold")) {
-            count = 2;
-        } else if (countRecognize.equals("Silver")) {
-            count = 4;
-        } else
-            count = 6;
-
-        Integer recognizeUpdate = recognizes.get(0).getId();
-        updateRecognize(recognize, recognizeUpdate);
-        User updateUser = userService.findByFirstName(user.getFirstname());
-        Integer updateUserId = updateUser.getId();
-        List<Badge> badgeList = getBadge(updateUserId);
-        updateUserBadge(badgeList, count);
-        return "dashboard";
+    public String dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
+        redirectAttributes.addFlashAttribute("message", user);
+        User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+        userService.updateUserBadge(recognize, user, httpSession);
+        userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
+        return "redirect:/dashboard";
     }
 
-    private void updateUserBadge(List<Badge> badgeList, Integer count) {
-        for (Badge badges : badgeList) {
-            if (badges.getType().equals("gold")) {
-                Badge badge = badges;
-                userService.updateUserBadge(badge, count);
-            }
-        }
-    }
-
-    private void updateRecognize(Recognize recognize, Integer recognizeid) {
-        String karma = recognize.getKarma();
-        String reason = recognize.getReason();
-        String count = recognize.getCountRecognize();
-        Integer recognizeId = recognizeid;
-        badgeService.updateRecognize(recognizeId, karma, reason, count);
-    }
 
     @GetMapping("/signUp")
     public String signing() {
         return "signUp";
+    }
+
+    @GetMapping("/SignOut")
+    public String signOut(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "login";
     }
 
     @PostMapping("/signUp")
@@ -151,41 +129,54 @@ public class UserController {
         return modelAndView;
     }
 
-    @DeleteMapping("/deleteUser/{id}")
-    public ModelAndView deleteUser(@PathVariable Integer id) {
+    @GetMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findById(id);
         userService.deleteUser(user);
         mailService.sendRevokedMail(user);
         modelAndView.setViewName("adminPanel");
-        return modelAndView;
+        redirectAttributes.addFlashAttribute("message", "deleted");
+        return "redirect:/adminPanel";
     }
 
     @GetMapping("/editUser/{id}")
-    public String editUser() {
-        return "adminUserEdit";
+    public ModelAndView editUser(@PathVariable Integer id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("editUserId", id);
+        modelAndView.setViewName("adminUserEdit");
+        return modelAndView;
     }
 
+    @Transactional
     @PostMapping("/editUser/{id}")
     public String editUser(@PathVariable Integer id, User user) {
+        System.out.println("Hiiiiiii" + id);
+        System.out.println("Hiiiiiii user" + user);
+
         userService.updateUser(id, user.getActive(), user.getRoles());
-        return "adminUserEdit";
+        return "redirect:/adminPanel";
     }
 
-    /* public ModelAndView editUser(@PathVariable Integer id, User user){
+  /*  public ModelAndView editUser(@PathVariable Integer id, User user){
          ModelAndView modelAndView = new ModelAndView();
-     }
-     */
-    @GetMapping("/Badge")
+     }*/
+
+    @GetMapping("/badge")
     @ResponseBody
     public List<Badge> getBadge(int userid) {
         return badgeService.getBadge(userid);
     }
 
-    @GetMapping("/BadgeList")
+    @GetMapping("/badgeList")
     public List<Recognize> getBadgeList(User user) {
         User user1 = badgeService.findbyFirstName(user.getFirstname());
         int userid = user1.getId();
         return badgeService.getBadgeList(userid);
+    }
+
+    @GetMapping("/badgeIndex")
+    public String badge() {
+        return "badgeIndex";
     }
 }

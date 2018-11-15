@@ -82,13 +82,13 @@
 </style>
 <body>
 <h2>Admin User Edit Form</h2>
-<form th:action="@{/editUser}" th:object="${upadtedUser}"
+<form th:href="@{'/editUser/{id}' (id=${editUserId})}" th:object="${upadtedUser}"
       class="form" method="post">
     <div class="imgcontainer">
         <span><i class="glyphicon glyphicon-edit"></i></span>
     </div>
     <div class="container">
-        <!--  First name:<br>
+        First name:<br>
           <div class="card-title" style="margin-top: 40px" th:utext="${userData.firstName}"></div>
           Last name:<br>
           <div class="card-title" th:utext="${userData.lastName}"></div><br>-->

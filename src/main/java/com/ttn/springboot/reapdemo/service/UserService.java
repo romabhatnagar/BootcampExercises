@@ -8,6 +8,7 @@ import com.ttn.springboot.reapdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
@@ -21,12 +22,14 @@ public class UserService {
         role.setRole("user");
         roleList.add(role);
         user.setRoles(roleList);
+        user.setSilverEarned(0);
+        user.setGoldEarned(0);
+        user.setBronzeEarned(0);
         Badge gold = new Badge("gold", 3);
         Badge silver = new Badge("silver", 2);
         Badge bronze = new Badge("bronze", 1);
         user.setBadgeList(new ArrayList<Badge>(Arrays.asList(gold, silver, bronze)));
-        Recognize take = new Recognize("taken", "Gold", "2");
-        user.setRecognizes(new ArrayList<Recognize>(Arrays.asList(take)));
+//        user.setRecognizes(new ArrayList<Recognize>(Arrays.asList(take)));
         userRepository.save(user);
     }
 
@@ -54,11 +57,53 @@ public class UserService {
         return userRepository.findByFirstname(firstname);
     }
 
-    public void updateUserBadge(Badge badge, Integer counttoadd) {
+   /* public void updateUserBadge(Badge badge, Integer counttoadd) {
         userRepository.updateBadge(badge.getId(), badge.getCount() + counttoadd, badge.getType());
+    }*/
+
+    public void updateUserBadge(Recognize recognize, User user, HttpSession httpSession) {
+        String countRecognize = recognize.getCountRecognize();
+        User updateUser = findByFirstName(user.getFirstname());
+        if (updateUser != null) {
+            Integer updateUserId = updateUser.getId();
+            Integer goldCount = updateUser.getGoldEarned();
+            Integer silverCount = updateUser.getSilverEarned();
+            Integer bronzeCount = updateUser.getBronzeEarned();
+
+            if (countRecognize.equals("Gold")) {
+                updateUser.setGoldEarned(goldCount + 1);
+            } else if (countRecognize.equals("Bronze")) {
+                updateUser.setBronzeEarned(bronzeCount + 1);
+            } else {
+                updateUser.setSilverEarned(silverCount + 1);
+            }
+            String karma = recognize.getKarma();
+            String reason = recognize.getReason();
+            String count = recognize.getCountRecognize();
+            User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+            recognize.setTakenFrom(loggedInUser.getId());
+            List<Recognize> recognizeList = new ArrayList<>();
+            recognizeList.add(recognize);
+            updateUser.setRecognizes(recognizeList);
+            userRepository.save(updateUser);
+        }
+
     }
 
     public void updateUser(Integer id, Boolean active, List<Role> roles) {
         userRepository.updateUser(id, active, roles);
+    }
+
+    public void updateLogginUserBadge(User loggedInUser, String countRecognize) {
+        User user = loggedInUser;
+        String badgeGiven = countRecognize;
+        List<Badge> badgeList = user.getBadgeList();
+
+        user.getBadgeList().forEach(badge -> {
+            if (badge.getType().equals("gold")) {
+                badge.setCount(badge.getCount() - 1);
+            }
+        });
+        userRepository.save(user);
     }
 }

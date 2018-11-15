@@ -39,7 +39,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     void updateBadge(@Param("id") Integer id, @Param("count") Integer count, @Param("type") String badgeType);
 
     @Modifying
-    @Query(value = "update user u set isactive=:active,roles=:roles where u.id=:id", nativeQuery = true)
+    @Query(value = "update user u set u.isActive=:active,u.roles=:roles where u.id=:id", nativeQuery = true)
     void updateUser(@Param("id") Integer id, @Param("active") Boolean active, @Param("roles") List<Role> roles);
 }
 

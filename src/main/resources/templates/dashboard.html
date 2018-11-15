@@ -2,19 +2,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="../stylesheet/bootstrap.min.css" rel="stylesheet"/>
     <link href="../stylesheet/ionicons.min.css" rel="stylesheet"/>
     <link href="../stylesheet/style.css" rel="stylesheet"/>
-</head>
-<script>
-    $("#basic-addon").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: '@Url.Action("getSearchValue","Home")',
-                dataType: "json",
-                data: {search: $("#basic-addon1").val()},
-                success: function (data) {
-                    response($.map(data, function (item) {
+
+    <script>
+        $(document).ready(function () {
+            $("#karmaOne").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#karmaTwo").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#karmaThree").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#karmaFour").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#karmaFive").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#karmaSix").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+
+            $("#mentorship1").click(function () {
+                var text = jQuery(this).attr("data-text");
+                console.log(text);
+                $("#mainReason").text(text);
+            });
+            $("#mentorship2").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#mentorship3").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#mentorship4").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#mentorship5").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#mentorship6").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+            $("#mentorship7").click(function () {
+                var text = this.value;
+                $("#mainReason").text(text);
+            });
+        });
+
+        function show(value) {
+            document.getElementById('mainReason').style.display = "block";
+            document.getElementById('extraMiler').style.display = "none";
+            document.getElementById('showMentorship').style.display = "none";
+
+        }
 
                     }))
                 },

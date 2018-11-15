@@ -21,12 +21,39 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_badge", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "badge_id"))
     private List<Badge> badgeList;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_recognize", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "recognize_id"))
     private List<Recognize> recognizes;
+    private Integer goldEarned;
+    private Integer silverEarned;
+    private Integer bronzeEarned;
+
+    public Integer getGoldEarned() {
+        return goldEarned;
+    }
+
+    public void setGoldEarned(Integer goldEarned) {
+        this.goldEarned = goldEarned;
+    }
+
+    public Integer getSilverEarned() {
+        return silverEarned;
+    }
+
+    public void setSilverEarned(Integer silverEarned) {
+        this.silverEarned = silverEarned;
+    }
+
+    public Integer getBronzeEarned() {
+        return bronzeEarned;
+    }
+
+    public void setBronzeEarned(Integer bronzeEarned) {
+        this.bronzeEarned = bronzeEarned;
+    }
 
     public List<Badge> getBadgeList() {
         return badgeList;
@@ -100,7 +127,6 @@ public class User {
         isActive = active;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -110,7 +136,6 @@ public class User {
                 ", lastname='" + lastname + '\'' +
                 ", password='" + password + '\'' +
                 ", isActive=" + isActive +
-                ", roles=" + roles +
                 '}';
     }
 }

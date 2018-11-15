@@ -8,11 +8,19 @@ public class Recognize {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String type;
     private String badgeType;
     private String countRecognize;
     private String karma;
     private String reason;
+    private Integer takenFrom;
+
+    public Integer getTakenFrom() {
+        return takenFrom;
+    }
+
+    public void setTakenFrom(Integer takenFrom) {
+        this.takenFrom = takenFrom;
+    }
 
     public String getKarma() {
         return karma;
@@ -33,10 +41,12 @@ public class Recognize {
     public Recognize() {
     }
 
-    public Recognize(String type, String badgeType, String countRecognize) {
-        this.type = type;
+    public Recognize(String badgeType, String countRecognize, String karma, String reason, Integer takenFrom) {
         this.badgeType = badgeType;
         this.countRecognize = countRecognize;
+        this.karma = karma;
+        this.reason = reason;
+        this.takenFrom = takenFrom;
     }
 
     public Integer getId() {
@@ -45,14 +55,6 @@ public class Recognize {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getBadgeType() {
@@ -75,11 +77,11 @@ public class Recognize {
     public String toString() {
         return "Recognize{" +
                 "id=" + id +
-                ", type='" + type + '\'' +
                 ", badgeType='" + badgeType + '\'' +
-                ", countRecognize=" + countRecognize +
+                ", countRecognize='" + countRecognize + '\'' +
                 ", karma='" + karma + '\'' +
                 ", reason='" + reason + '\'' +
+                ", takenFrom=" + takenFrom +
                 '}';
     }
 }

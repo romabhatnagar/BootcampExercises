@@ -136,8 +136,8 @@ public class UserDTO {
             UserDTO userDTO = new UserDTO();
             userDTO.setEmail(user.getEmail());
             userDTO.setFirstName(user.getFirstname());
-            userDTO.setBronze(user.getBadgeList().get(2).getCount());
-            userDTO.setGold(user.getBadgeList().get(0).getCount());
+            userDTO.setBronze(user.getBadgeList().get(0).getCount());
+            userDTO.setGold(user.getBadgeList().get(2).getCount());
             userDTO.setSilver(user.getBadgeList().get(1).getCount());
             userDTO.setIsactive(user.getActive());
             userDTO.setRoleList(user.getRoles());

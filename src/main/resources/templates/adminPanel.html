@@ -33,9 +33,21 @@
             <th>Email</th>
             <th>Available Points</th>
             <th> Points Used</th>
-            <th align="center"> &nbsp; &nbsp; Badge Count <br/>
+            <!--<th align="center"> &nbsp; &nbsp; Badge Count <br/>-->
+            <!---->
+            <!--<i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:silver;"> </i>-->
+            <!--<i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:brown;"> </i>-->
+            <!--</th>-->
+            <th>
+                Gold
                 <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:gold;"> </i>
+            </th>
+            <th>
+                Silver
                 <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:silver;"> </i>
+            </th>
+            <th>
+                Bronze
                 <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px; color:brown;"> </i>
             </th>
         </tr>
@@ -59,7 +71,7 @@
             <td align="center"
                 th:utext="${userDto.getGold()*30}+${userDto.getSilver()*20}+${userDto.getBronze()*10}"></td>
             <td align="center">0</td>
-            <td align="center">
+            <!--<td align="center">-->
                 <!--<tr>-->
             <td align="center" th:utext="${userDto.gold}"></td>
             <td align="center" th:utext="${userDto.silver}"></td>
