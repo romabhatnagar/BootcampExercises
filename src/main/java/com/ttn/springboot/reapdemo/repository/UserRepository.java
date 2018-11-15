@@ -45,5 +45,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("select r from Recognize r")
     List<Recognize> getList();
 
+    @Query("select r from Recognize r order by r.timeStamp desc")
+    List<Recognize> findRecognizeList();
 }
 

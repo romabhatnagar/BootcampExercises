@@ -1,6 +1,7 @@
 package com.ttn.springboot.reapdemo.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "recognize")
@@ -9,43 +10,35 @@ public class Recognize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String type;
-    private String badgeType;
     private String countRecognize;
+    private String name;
     private String karma;
     private String reason;
-    private Integer takenFrom;
+    private String givenTo;
 
-    public Integer getTakenFrom() {
-        return takenFrom;
+    public String getGivenTo() {
+        return givenTo;
     }
 
-    public void setTakenFrom(Integer takenFrom) {
-        this.takenFrom = takenFrom;
+    public void setGivenTo(String givenTo) {
+        this.givenTo = givenTo;
     }
 
-    public String getKarma() {
-        return karma;
-    }
+    private String takenFrom;
+    private Date timeStamp;
 
-    public void setKarma(String karma) {
+    public Recognize(String type, String countRecognize, String name, String karma, String reason, String givenTo, String takenFrom, Date timeStamp) {
+        this.type = type;
+        this.countRecognize = countRecognize;
+        this.name = name;
         this.karma = karma;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
         this.reason = reason;
+        this.givenTo = givenTo;
+        this.takenFrom = takenFrom;
+        this.timeStamp = timeStamp;
     }
 
     public Recognize() {
-    }
-
-    public Recognize(String type, String badgeType, String countRecognize) {
-        this.type = type;
-        this.badgeType = badgeType;
-        this.countRecognize = countRecognize;
     }
 
     public Integer getId() {
@@ -64,14 +57,6 @@ public class Recognize {
         this.type = type;
     }
 
-    public String getBadgeType() {
-        return badgeType;
-    }
-
-    public void setBadgeType(String badgeType) {
-        this.badgeType = badgeType;
-    }
-
     public String getCountRecognize() {
         return countRecognize;
     }
@@ -80,16 +65,58 @@ public class Recognize {
         this.countRecognize = countRecognize;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKarma() {
+        return karma;
+    }
+
+    public void setKarma(String karma) {
+        this.karma = karma;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getTakenFrom() {
+        return takenFrom;
+    }
+
+    public void setTakenFrom(String takenFrom) {
+        this.takenFrom = takenFrom;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     @Override
     public String toString() {
         return "Recognize{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", badgeType='" + badgeType + '\'' +
                 ", countRecognize='" + countRecognize + '\'' +
+                ", name='" + name + '\'' +
                 ", karma='" + karma + '\'' +
                 ", reason='" + reason + '\'' +
-                ", takenFrom=" + takenFrom +
+                ", givenTo='" + givenTo + '\'' +
+                ", takenFrom='" + takenFrom + '\'' +
+                ", timeStamp=" + timeStamp +
                 '}';
     }
 }

@@ -61,13 +61,17 @@ public class UserController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpServletRequest httpServletRequest) {
+    public ModelAndView dashboard(HttpServletRequest httpServletRequest) {
+        ModelAndView modelAndView = new ModelAndView();
         HttpSession httpSession = httpServletRequest.getSession();
         User user = (User) httpSession.getAttribute("userLoggedIn");
         if (user == null) {
-            return "redirect:/login";
+            modelAndView.setViewName("login");
         }
-        return "dashboard";
+        List<Recognize> userRecognizeList = userService.findRecognizeList();
+        modelAndView.addObject("recognizeList", userRecognizeList);
+        modelAndView.setViewName("dashboard");
+        return modelAndView;
     }
 
     @Transactional
@@ -79,6 +83,8 @@ public class UserController {
         modelAndView.setViewName("dashboard");
         userService.updateUserBadge(recognize, user, httpSession);
         userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
+        List<Recognize> userRecognizeList = userService.findRecognizeList();
+        modelAndView.addObject("recognizeList", userRecognizeList);
         return "redirect:/dashboard";
     }
 
@@ -101,6 +107,7 @@ public class UserController {
 
         if (user1 != null) {
             model.addObject("message", "This email is already regsitered!");
+            model.setViewName("signUp");
             return model;
         }
 
@@ -108,7 +115,8 @@ public class UserController {
             return model;
         } else {
             userService.saveUser(user);
-            model.addObject("message", "User has been registered successfully!");
+//            model.addObject("message", "User has been registered successfully!");
+            model.setViewName("login");
         }
         return model;
     }

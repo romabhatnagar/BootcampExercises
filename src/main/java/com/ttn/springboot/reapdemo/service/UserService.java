@@ -62,7 +62,7 @@ public class UserService {
         String countRecognize = recognize.getCountRecognize();
         User updateUser = findByFirstName(user.getFirstName());
         if (updateUser != null) {
-            Integer updateUserId = updateUser.getId();
+            String takenFromUser = updateUser.getFirstName();
             Integer goldCount = updateUser.getGoldEarned();
             Integer silverCount = updateUser.getSilverEarned();
             Integer bronzeCount = updateUser.getBronzeEarned();
@@ -78,7 +78,9 @@ public class UserService {
             String reason = recognize.getReason();
             String count = recognize.getCountRecognize();
             User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
-            recognize.setTakenFrom(loggedInUser.getId());
+            recognize.setTimeStamp(new Date());
+            recognize.setGivenTo(updateUser.getFirstName());
+            recognize.setTakenFrom(loggedInUser.getFirstName());
             List<Recognize> recognizeList = new ArrayList<>();
             recognizeList.add(recognize);
             updateUser.setRecognizes(recognizeList);
@@ -102,6 +104,10 @@ public class UserService {
             }
         });
         userRepository.save(user);
+    }
+
+    public List<Recognize> findRecognizeList() {
+        return userRepository.findRecognizeList();
     }
 
  /*   public List<Recognize> getRecognizeList() {

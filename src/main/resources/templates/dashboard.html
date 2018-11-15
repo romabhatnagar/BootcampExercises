@@ -476,15 +476,27 @@
                             <i class="icon ion-md-save" style="padding-left:15px; padding-right:5px;"> </i> Wall Of Fame
                         </div>
                         <div class="card-body">
-
                             <div class="newersBoardImage">
-                                <!-- <tr>
-                                     <td th:each="list:${recognizeList}" th:each="idList:${userIdList}" th:each="takenId:${takenFromIdList}"></td>
-                                 </tr>
-                                 <img src="" height="50px" width="50px" class="badgeImage">
-                                 <b th:utext="${idList}"></b> has received from <b th:utext="${tak}"></b> for<br/>&ndash;&gt;
-                                 <b th:utext="${}"></b><br/>
-                                 </h6>-->
+                                <div th:each="recognizeList:${recognizeList}">
+                                   <span>
+                                       <i class="fa fa-user" style="height: 20px"></i>
+                                   </span>
+                                    <p>
+                                        <strong>
+                                            <td th:text="${recognizeList.givenTo}">
+                                        </strong> has received <i class="ion ion-ios-star-half"
+                                                                  style="padding-left:15px; padding-right:5px; color:gold;"></i></td>
+                                    <td th:text="${recognizeList.countRecognize}"></td>
+                                    from
+                                    <strong>
+                                        <td th:text="${recognizeList.takenFrom}">
+                                    </strong></td> for
+                                    <td th:text="${recognizeList.karma}"></td>
+                                    <br/>
+                                    <td th:text="${recognizeList.reason}"></td>
+                                    </p><br/>
+                                    <hr>
+                                </div>
                             </div>
 
                         </div>

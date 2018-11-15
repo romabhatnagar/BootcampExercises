@@ -2,10 +2,23 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/stylesheet/index.css">
+
+    <script>
+        $(document).ready(function () {
+            $("#signIn").click(function () {
+                $("#firstName").style.display = "none";
+                $("#lastName").style.display = "none";
+                $("#email").style.display = "none";
+                $("#password").style.display = "none";
+            });
+        });
+    </script>
+
+
 </head>
 <body>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -43,7 +56,7 @@
 												</span>
                                             <input class="form-control" placeholder="First name"
                                                    pattern="[A-Za-z]{3,15}" title="Please enter minimum three alphabets"
-                                                   required name="firstName" type="text" autofocus>
+                                                   required name="firstName" type="text" id="firstName" autofocus>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -53,7 +66,7 @@
 												</span>
                                             <input class="form-control" placeholder="Last name" pattern="[A-Za-z]{1,15}"
                                                    title="Please enter minimum one alphabet" required name="lastName"
-                                                   type="text" autofocus>
+                                                   type="text" autofocus id="lastName">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -62,7 +75,7 @@
 													<i class="glyphicon glyphicon-lock"></i>
 												</span>
                                             <input class="form-control" placeholder="Password" pattern="[A-Za-z]{5,10}"
-                                                   required name="password" type="password" value=""
+                                                   required name="password" type="password" value="" id="password"
                                                    title="Please enter combination of minimum of 5 alphabtes">
                                         </div>
                                     </div>
@@ -72,19 +85,12 @@
 												<span class="glyphicon glyphicon-envelope"></span>
 									 			</span>
                                             <input class="form-control" placeholder="Email" required name="email"
-                                                   type="email" value="">
+                                                   id="email" type="email">
                                         </div>
                                     </div>
-                                    <!--    <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                        <i class="glyphicon glyphicon-image"></i>
-                                                    </span>
-                                                <input class="form-control" type="file" enctype="multipart/form-data" name="photo" id="photo" placeholder="image">
-                                            </div>
-                                        </div>-->
                                     <div class="form-group">
-                                        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in">
+                                        <input type="submit" class="btn btn-lg btn-primary btn-block" id="signIn"
+                                               value="Sign in">
                                     </div>
                                 </div>
                             </div>
