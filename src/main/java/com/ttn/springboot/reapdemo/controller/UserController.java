@@ -16,11 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,14 +38,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String afterLogin(@ModelAttribute("user") @Valid User user, HttpSession httpSession) {
+    public ModelAndView afterLogin(@ModelAttribute("user") @Valid User user, HttpSession httpSession) {
         User user1 = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         ModelAndView modelAndView = new ModelAndView();
 
         if (user1 == null) {
             modelAndView.addObject("message", "These credentials doesnot match with our records");
+            modelAndView.setViewName("login");
+            return modelAndView;
         } else if (user1.getActive() == false) {
             modelAndView.addObject("message", "Sorry, this user is inactive");
+            modelAndView.setViewName("login");
+            return modelAndView;
         } else {
             httpSession.setAttribute("userLoggedIn", user1);
             modelAndView.addObject("userData", user1);
@@ -55,8 +57,7 @@ public class UserController {
             modelAndView.addObject("userBadge", badgeList);
             modelAndView.setViewName("dashboard");
         }
-//        return modelAndView;
-        return "redirect:/dashboard";
+        return modelAndView;
     }
 
     @GetMapping("/dashboard")
@@ -74,10 +75,8 @@ public class UserController {
     public String dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         redirectAttributes.addFlashAttribute("message", user);
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
-//        List<Recognize> recognizeList = userService.getRecognizeList();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("dashboard");
-//        modelAndView.addObject("recognizeList", recognizeList);
         userService.updateUserBadge(recognize, user, httpSession);
         userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
         return "redirect:/dashboard";
@@ -89,7 +88,7 @@ public class UserController {
         return "signUp";
     }
 
-    @GetMapping("/SignOut")
+    @GetMapping("/logout")
     public String signOut(HttpSession httpSession) {
         httpSession.invalidate();
         return "login";
@@ -129,13 +128,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/adminPanel", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView showAdminPanel(Model model) {
-        List<User> userList = userService.findAll();
-        List<UserDTO> list = UserDTO.createUserDTO(userList);
+    public ModelAndView showAdminPanel(Model model, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("userDtoList", list);
-        modelAndView.setViewName("adminPanel");
-        System.out.println(UserDTO.createUserDTO(userList));
+        User user = (User) httpSession.getAttribute("userLoggedIn");
+        User user1 = userService.findByFirstName(user.getFirstName());
+
+        if (!user1.getRoles().contains("admin")) {
+            modelAndView.setViewName("login");
+        } else {
+            List<User> userList = userService.findAll();
+            List<UserDTO> list = UserDTO.createUserDTO(userList);
+            modelAndView.addObject("userDtoList", list);
+            modelAndView.setViewName("adminPanel");
+            System.out.println(UserDTO.createUserDTO(userList));
+        }
         return modelAndView;
     }
 
@@ -161,16 +167,9 @@ public class UserController {
     @Transactional
     @PostMapping("/editUser/{id}")
     public String editUser(@PathVariable Integer id, User user) {
-        System.out.println("Hiiiiiii" + id);
-        System.out.println("Hiiiiiii user" + user);
-
         userService.updateUser(id, user.getActive(), user.getRoles());
         return "redirect:/adminPanel";
     }
-
-  /*  public ModelAndView editUser(@PathVariable Integer id, User user){
-         ModelAndView modelAndView = new ModelAndView();
-     }*/
 
     @GetMapping("/badge")
     @ResponseBody

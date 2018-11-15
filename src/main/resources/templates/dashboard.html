@@ -121,13 +121,18 @@
             <!-- Top Menu -->
             <div class="navbar-collapse top-menu flex-column collapse" id="navbar">
                 <ul class="navbar-nav ml-auto">
-                    <li><a class="nav-link" href="#home"><img src="../svg/si-glyph-dashboard.svg"
-                                                              class="glyphyicon">Dashboard</a></li>
+                    <li><a class="nav-link" th:href="@{/dashboard}"><img src="../svg/si-glyph-dashboard.svg"
+                                                                         class="glyphyicon">Dashboard</a></li>
                     <li><a class="nav-link active" th:href="@{/badgeIndex}"><img src="../svg/si-glyph-medal-star.svg"
                                                                                  class="glyphyicon">Badges</a></li>
                     <li><a class="nav-link" href="#services"><img src="../svg/si-glyph-light-bulb.svg"
                                                                   class="glyphyicon"></a></li>
                 </ul>
+                <form th:action="@{'/logout'}">
+                    <button id="logout" type="submit" class="btn btn-default" style="background-color: #2e6da4">Logout
+                        <span class="glyphicon-log-out"></span>
+                    </button>
+                </form>
 
             </div>
             <!-- / -->

@@ -1,6 +1,9 @@
 package com.ttn.springboot.reapdemo.repository;
 
-import com.ttn.springboot.reapdemo.entity.*;
+import com.ttn.springboot.reapdemo.entity.Badge;
+import com.ttn.springboot.reapdemo.entity.Recognize;
+import com.ttn.springboot.reapdemo.entity.Role;
+import com.ttn.springboot.reapdemo.entity.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

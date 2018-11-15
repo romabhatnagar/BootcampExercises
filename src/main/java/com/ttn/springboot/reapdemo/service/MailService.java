@@ -38,18 +38,5 @@ public class MailService {
         mailMessage.setText("Sorry you have been revoked by the admin!");
         javaMailSender.send(mailMessage);
     }
-    /*static char[] generatePassword(int length) {
-        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        String numbers = "0123456789";
-        String splChars = "!@#$%^&*";
-        Random random = new Random();
-        String pwd = letters + splChars + numbers;
-        char[] newPassword = new char[length];
-
-        for (int i = 0; i < length; i++) {
-            newPassword[i] = pwd.charAt(random.nextInt(pwd.length()));
-        }
-        return newPassword;
-    }*/
 }
 
