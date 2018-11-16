@@ -3,7 +3,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="../stylesheet/bootstrap.min.css" rel="stylesheet"/>
+    <script src="../js/scripts.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="../stylesheet/bootstrap.min.css" rel="stylesheet"
+    / >
     <link href="../stylesheet/ionicons.min.css" rel="stylesheet"/>
     <link href="../stylesheet/style.css" rel="stylesheet"/>
 
@@ -62,24 +65,6 @@
                 var text = jQuery(this).attr("data-text");
                 $("#mainReason").text(text);
             });
-
-            /*    $("#name").autocomplete ({
-                    source: function(request, response){
-                        $.ajax({
-                                url: '@Url.Action("getSearchValue","UserController")',
-                                dataType:"json",
-                                data: {search : $("#name").val() },
-                                success: function(data){
-                                    response($.map(data, function(item) {
-                                        return {label: item.name, value: item.name};
-                                    }));
-                            },
-                            error: function(xhr, status, error){
-                            alert("error");
-                        }
-                    });
-                    }
-            });*/
         });
 
         function show(value) {
@@ -105,9 +90,53 @@
             }
         }
     </script>
+
+    <style>
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .profilePic {
+            height: 40px;
+            width: 40px;
+        }
+
+        #profileMenu {
+            position: relative;
+            float: right;
+            margin-right: 50px;
+            margin-top: -30px;
+            height: 200px;
+            width: 400px;
+            background-color: white;
+            z-index: 1000;
+            border: 1px grey solid;
+        }
+
+        .profileImage {
+            float: left;
+            margin-top: 20px;
+            margin-left: 20px;
+            height: 60px;
+            width: 60px;
+        }
+
+        .profileDetailsFont {
+            font-size: 14px;
+        }
+
+        #profileFooter {
+            padding-top: 150px;
+        }
+    </style>
 </head>
 
-<body>
+<body onload="addHideClass()">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <header>
     <nav class="navbar header-nav navbar-expand-lg">
@@ -127,6 +156,9 @@
                                                                                  class="glyphyicon">Badges</a></li>
                     <li><a class="nav-link" href="#services"><img src="../svg/si-glyph-light-bulb.svg"
                                                                   class="glyphyicon"></a></li>
+                    <li><a class="nav-link" href=""><img src="" class="fa fa-user" style="width:30px"
+                                                         onClick="showHideProfileMenu();return false;"/></a></li>
+
                 </ul>
                 <form th:action="@{'/logout'}">
                     <button id="logout" type="submit" class="btn btn-default" style="background-color: #2e6da4">Logout
@@ -139,6 +171,27 @@
 
         </div><!-- Container -->
     </nav> <!-- Navbar -->
+
+    <div id="profileMenu" class="">
+        <div> <!--Div for image--->
+            <p style="margin-left:20px; margin-right:20px; margin-bottom:-10px; margin-top:10px;"> Your Profile </p>
+            <img src="" class="profileImage"/>
+        </div>
+        <div style="float:right; margin-right:90px; margin-top:20px;"><!--Div for details--->
+            <p class="profileDetailsFont">Newer Name: Roma Bhatnagar</p>
+            <p class="profileDetailsFont">Email Id: rosma@gmail.com</p>
+        </div>
+        <div id="profileFooter">
+            <div style="width:50%; float:left; text-align: center; background-color:#F5F4F4;">
+                <a href="">Users</a>
+            </div>
+            <div style="width:50%; float:right; text-align: center; background-color:#F5F4F4;">
+                <a href="">Logout</a>
+            </div>
+        </div>
+    </div>
+
+
     <section class="section" name="Section1" style="padding-top: 30px; padding-bottom: 20px !important;">
         <div class="container container-custom">
             <div class="row">

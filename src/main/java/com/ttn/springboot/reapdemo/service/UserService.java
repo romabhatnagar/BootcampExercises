@@ -113,5 +113,17 @@ public class UserService {
  /*   public List<Recognize> getRecognizeList() {
         return userRepository.getList();
     }*/
+ public List<Recognize> findUserRecognizeforAllBadges(String name) {
+     return userRepository.find(name);
+ }
+
+    public List<Recognize> findUserRecognizeForSharedBadges(String name) {
+        return userRepository.findAllByRecognizeName(name);
+    }
+
+    public List<Recognize> findUserRecognizeforReceivedBadges(String givenTo) {
+        return userRepository.findAllByGivenTo(givenTo);
+    }
+
 
 }

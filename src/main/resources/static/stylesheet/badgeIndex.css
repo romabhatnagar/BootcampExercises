@@ -1,7 +1,10 @@
 
 element.style {
+    float: right;
+    margin-right: 50px;
+    background-color: #795548;
+    /* margin-top: -293px; */
 }
-
 .container-fluid {
     padding-right: 15px;
     padding-left: 15px;

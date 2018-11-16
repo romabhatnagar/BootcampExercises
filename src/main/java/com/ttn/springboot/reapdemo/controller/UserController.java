@@ -143,14 +143,14 @@ public class UserController {
 
         if (!user1.getRoles().contains("admin")) {
             modelAndView.setViewName("login");
+            return modelAndView;
         } else {
             List<User> userList = userService.findAll();
             List<UserDTO> list = UserDTO.createUserDTO(userList);
             modelAndView.addObject("userDtoList", list);
             modelAndView.setViewName("adminPanel");
-            System.out.println(UserDTO.createUserDTO(userList));
+            return modelAndView;
         }
-        return modelAndView;
     }
 
     @GetMapping("/deleteUser/{id}")
@@ -192,9 +192,41 @@ public class UserController {
         return badgeService.getBadgeList(userid);
     }
 
-    @GetMapping("/badgeIndex")
+/*    @GetMapping("/badgeIndex")
     public String badge() {
         return "badgeIndex";
+    }*/
+
+    @RequestMapping(value = "/badgeIndex", method = RequestMethod.GET)
+    public ModelAndView showAllBadges(Recognize userRecognize, HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+        System.out.println("---------------" + loggedInUser.getEmail() + "----" + loggedInUser.getId());
+        List<Recognize> userRecognizeList = (List<Recognize>) userService.findUserRecognizeforAllBadges(loggedInUser.getFirstName());
+        System.out.println("----------------" + userRecognizeList);
+        modelAndView.addObject("recognizeList", userRecognizeList);
+        modelAndView.setViewName("/badgeIndex");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/sharedBadges", method = RequestMethod.GET)
+    public ModelAndView showSharedBadges(Recognize userRecognize, HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+        List<Recognize> userRecognizeList = userService.findUserRecognizeForSharedBadges(loggedInUser.getFirstName());
+        modelAndView.addObject("recognizeList", userRecognizeList);
+        modelAndView.setViewName("/sharedBadges");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/receivedBadges", method = RequestMethod.GET)
+    public ModelAndView showreceivedBadges(Recognize userRecognize, HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+        List<Recognize> userRecognizeList = userService.findUserRecognizeforReceivedBadges(loggedInUser.getFirstName());
+        modelAndView.addObject("recognizeList", userRecognizeList);
+        modelAndView.setViewName("/receivedBadges");
+        return modelAndView;
     }
 
 }

@@ -1,19 +1,18 @@
-$(document).ready(function () {
-    $("#profileMenu").addClass('hide');
-});
-
+function addHideClass() {
+    document.getElementById("profileMenu").classList.add("hide");
+}
 
 function showHideProfileMenu(event) {
-    if ($("#profileMenu").hasClass('show')) {
-        $("#profileMenu").removeClass('show');
-        $("#profileMenu").addClass('hide');
-        $("#badges").removeClass('hide');
-        $("#badges").addClass('show');
+    if (document.getElementById("profileMenu").classList.contains('show')) {
+        document.getElementById("profileMenu").classList.remove('show');
+        document.getElementById("profileMenu").classList.add('hide');
+        document.getElementById("badges").classList.remove('hide');
+        document.getElementById("badges").classList.add('show');
     }
-    else if ($("#profileMenu").hasClass('hide')) {
-        $("#profileMenu").removeClass('hide');
-        $("#profileMenu").addClass('show');
-        $("#badges").removeClass('show');
-        $("#badges").addClass('hide');
+    else if (document.getElementById("profileMenu").classList.contains('hide')) {
+        document.getElementById("profileMenu").classList.remove('hide');
+        document.getElementById("profileMenu").classList.add('show');
+        document.getElementById("badges").classList.remove('show');
+        document.getElementById("badges").classList.add('hide');
     }
 }
