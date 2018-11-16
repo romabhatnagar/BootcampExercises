@@ -136,11 +136,17 @@ public class UserController {
 
     @PostMapping("/forgotPassword")
     public ModelAndView sendMail(User user) {
-        mailService.sendMail(user);
+        User user1 = userService.findByEmail(user.getEmail());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("message", "Email has been sent to " + user.getEmail());
-        return modelAndView;
-
+        if (user1 == null) {
+            modelAndView.addObject("message", "Sorry email doesnot match");
+            modelAndView.setViewName("forgotPassword");
+            return modelAndView;
+        } else {
+            mailService.sendMail(user);
+            modelAndView.addObject("message", "Email has been sent to " + user.getEmail());
+            return modelAndView;
+        }
     }
 
     @RequestMapping(value = "/adminPanel", method = {RequestMethod.POST, RequestMethod.GET})

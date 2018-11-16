@@ -59,20 +59,12 @@
                 <div th:each="roleList: ${userDto.getRoleList()}">
                     <div th:utext="${roleList.getRole()}"></div>
                 </div>
-                <!--   <select>
-                       <option value="Admin"> Admin</option>
-                       <option value="User"> User</option>
-                       <option value="Supervisor"> Supervisor</option>
-                       <option value="Practice Head"> Practice Head</option>
-                   </select>-->
             </td>
             <td align="center" th:utext="${userDto.getIsactive()}"></td>
             <td align="center" th:utext="${userDto.email}"></td>
             <td align="center"
                 th:utext="${userDto.getGold()*30}+${userDto.getSilver()*20}+${userDto.getBronze()*10}"></td>
             <td align="center">0</td>
-            <!--<td align="center">-->
-                <!--<tr>-->
             <td align="center" th:utext="${userDto.gold}"></td>
             <td align="center" th:utext="${userDto.silver}"></td>
             <td align="center" th:utext="${userDto.bronze}"></td>
