@@ -178,8 +178,11 @@
             <img src="" class="profileImage"/>
         </div>
         <div style="float:right; margin-right:90px; margin-top:20px;"><!--Div for details--->
-            <p class="profileDetailsFont">Newer Name: Roma Bhatnagar</p>
-            <p class="profileDetailsFont">Email Id: rosma@gmail.com</p>
+            <p class="profileDetailsFont">Newer Name:
+            <div th:utext="${session.userLoggedIn.firstName}"></div>
+            <p class="profileDetailsFont">Email Id:
+            <div th:utext="${session.userLoggedIn.email}"></div>
+            </p>
         </div>
         <div id="profileFooter">
             <div style="width:50%; float:left; text-align: center; background-color:#F5F4F4;">
@@ -237,6 +240,13 @@
                                     </select>
                                     </div>
                             </span>
+
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger" role="alert" th:if="${message}"
+                                         th:utext="${message}"></div>
+                                </div>
+
+
                                 <!--<div stlye="font-weight:200;"> Reason</div>-->
                                 <textarea rows="3" cols="90" class="m-3" id="reason"
                                           name="reason" placeholder="Please specify a reason!"></textarea>
@@ -496,7 +506,8 @@
                         </div>
 
                         <div class="card-body">
-                            <img src="" height="50px" width="50px" / class="badgeImage">
+                            <img src="../svg/si-glyph-person-2.svg" class="glyphyicon">
+                            <!--<img src=""height="50px" width="50px" / class="badgeImage">-->
                             <h6>
                                 <div class="card-title" th:utext="${session.userLoggedIn.firstName}"></div>
                             </h6>
@@ -506,10 +517,10 @@
                                    style="padding-left:15px; padding-right:5px; color:gold;"></i>
                                 <td th:text="${session.userLoggedIn.silverEarned}"></td>
                                 <i class="ion ion-ios-star-half"
-                                   style="padding-left:15px; padding-right:5px; color:gold;"> </i>
+                                   style="padding-left:15px; padding-right:5px; color:silver;"> </i>
                                 <td th:text="${session.userLoggedIn.bronzeEarned}"></td>
                                 <i class="ion ion-ios-star-half"
-                                   style="padding-left:15px; padding-right:5px; color:gold;"> </i>
+                                   style="padding-left:15px; padding-right:5px; color:brown;"> </i>
                             </tr>
                         </div>
                     </div>
@@ -563,11 +574,16 @@
                         </div>
                         <div class="card-body">
                             <div class="newersBoardImage">
-                                <img src="" height="50px" width="50px" class="badgeImage">
-                                <h6 class="card-title">Roma</h6>
-                                <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i>
-                                <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i>
-                                <i class="ion ion-ios-star-half" style="padding-left:15px; padding-right:5px;"> </i>
+                                <img src="../svg/si-glyph-person-2.svg" class="glyphyicon">
+                                <h6 class="card-title">
+                                    <div th:utext="${session.userLoggedIn.firstName}"></div>
+                                </h6>
+                                <i class="ion ion-ios-star-half"
+                                   style="padding-left:15px; padding-right:5px;color: gold"> </i>
+                                <i class="ion ion-ios-star-half"
+                                   style="padding-left:15px; padding-right:5px; color: silver"> </i>
+                                <i class="ion ion-ios-star-half"
+                                   style="padding-left:15px; padding-right:5px; color: brown"> </i>
                             </div>
                         </div>
                     </div>

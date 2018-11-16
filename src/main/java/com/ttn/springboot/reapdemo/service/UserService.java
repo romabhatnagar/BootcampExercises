@@ -61,7 +61,7 @@ public class UserService {
         String countRecognize = recognize.getCountRecognize();
         User updateUser = findByFirstName(user.getFirstName());
         if (updateUser != null) {
-            String takenFromUser = updateUser.getFirstName();
+//            String takenFromUser = updateUser.getFirstName();
             Integer goldCount = updateUser.getGoldEarned();
             Integer silverCount = updateUser.getSilverEarned();
             Integer bronzeCount = updateUser.getBronzeEarned();
@@ -73,9 +73,9 @@ public class UserService {
             } else {
                 updateUser.setSilverEarned(silverCount + 1);
             }
-            String karma = recognize.getKarma();
+  /*          String karma = recognize.getKarma();
             String reason = recognize.getReason();
-            String count = recognize.getCountRecognize();
+            String count = recognize.getCountRecognize();*/
             User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
             recognize.setTimeStamp(new Date());
             recognize.setGivenTo(updateUser.getFirstName());

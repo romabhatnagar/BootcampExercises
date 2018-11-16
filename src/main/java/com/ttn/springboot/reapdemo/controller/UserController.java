@@ -80,12 +80,16 @@ public class UserController {
     @Transactional
     @PostMapping("/dashboard")
     public ModelAndView dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
+        User user1 = userService.findByFirstName(user.getFirstName());
         redirectAttributes.addFlashAttribute("message", user);
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
         ModelAndView modelAndView = new ModelAndView();
 
-        if (user == null) {
+        if (loggedInUser == null) {
             modelAndView.setViewName("login");
+        } else if (user1 == null) {
+            modelAndView.addObject("message", "Sorry name doesnot match");
+            modelAndView.setViewName("dashboard");
         } else {
             userService.updateUserBadge(recognize, user, httpSession);
             userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
