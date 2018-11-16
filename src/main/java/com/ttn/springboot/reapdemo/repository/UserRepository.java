@@ -48,7 +48,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("select r from Recognize r order by r.timeStamp desc")
     List<Recognize> findRecognizeList();
 
-    @Query("select r from Recognize r where takenFrom = :name and givenTo =:name")
+    @Query("select r from Recognize r where takenFrom= :name or givenTo =:name")
     List<Recognize> find(@Param("name") String name);
 
     @Query("select r from Recognize r where takenFrom= :name")

@@ -15,6 +15,8 @@ public class Recognize {
     private String karma;
     private String reason;
     private String givenTo;
+    private String takenFrom;
+    private Date timeStamp;
 
     public String getGivenTo() {
         return givenTo;
@@ -23,9 +25,6 @@ public class Recognize {
     public void setGivenTo(String givenTo) {
         this.givenTo = givenTo;
     }
-
-    private String takenFrom;
-    private Date timeStamp;
 
     public Recognize(String type, String countRecognize, String name, String karma, String reason, String givenTo, String takenFrom, Date timeStamp) {
         this.type = type;

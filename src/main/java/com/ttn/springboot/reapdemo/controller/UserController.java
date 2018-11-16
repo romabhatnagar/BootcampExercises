@@ -56,8 +56,8 @@ public class UserController {
             List<Badge> badgeList = getBadge(user1.getId());
             modelAndView.addObject("userBadge", badgeList);
             modelAndView.setViewName("dashboard");
+            return new ModelAndView("redirect:/dashboard");
         }
-        return modelAndView;
     }
 
     @GetMapping("/dashboard")
@@ -65,27 +65,35 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession httpSession = httpServletRequest.getSession();
         User user = (User) httpSession.getAttribute("userLoggedIn");
+
         if (user == null) {
             modelAndView.setViewName("login");
+        } else {
+            List<Recognize> userRecognizeList = userService.findRecognizeList();
+            modelAndView.addObject("recognizeList", userRecognizeList);
+            modelAndView.setViewName("dashboard");
         }
-        List<Recognize> userRecognizeList = userService.findRecognizeList();
-        modelAndView.addObject("recognizeList", userRecognizeList);
-        modelAndView.setViewName("dashboard");
         return modelAndView;
     }
 
+
     @Transactional
     @PostMapping("/dashboard")
-    public String dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
+    public ModelAndView dashboard(User user, Recognize recognize, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         redirectAttributes.addFlashAttribute("message", user);
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("dashboard");
-        userService.updateUserBadge(recognize, user, httpSession);
-        userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
-        List<Recognize> userRecognizeList = userService.findRecognizeList();
-        modelAndView.addObject("recognizeList", userRecognizeList);
-        return "redirect:/dashboard";
+
+        if (user == null) {
+            modelAndView.setViewName("login");
+        } else {
+            userService.updateUserBadge(recognize, user, httpSession);
+            userService.updateLogginUserBadge(loggedInUser, recognize.getCountRecognize());
+            List<Recognize> userRecognizeList = userService.findRecognizeList();
+            modelAndView.addObject("recognizeList", userRecognizeList);
+            modelAndView.setViewName("dashboard");
+        }
+        return modelAndView;
     }
 
 
@@ -140,18 +148,18 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         User user = (User) httpSession.getAttribute("userLoggedIn");
         User user1 = userService.findByFirstName(user.getFirstName());
-
-        if (!user1.getRoles().contains("admin")) {
-            modelAndView.setViewName("login");
-            return modelAndView;
-        } else {
+        if (user1.getRoles().get(0).getRole().equals("admin")) {
             List<User> userList = userService.findAll();
             List<UserDTO> list = UserDTO.createUserDTO(userList);
             modelAndView.addObject("userDtoList", list);
             modelAndView.setViewName("adminPanel");
+        } else {
+            modelAndView.setViewName("login");
             return modelAndView;
         }
+        return modelAndView;
     }
+
 
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
@@ -201,9 +209,13 @@ public class UserController {
     public ModelAndView showAllBadges(Recognize userRecognize, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
-        System.out.println("---------------" + loggedInUser.getEmail() + "----" + loggedInUser.getId());
-        List<Recognize> userRecognizeList = (List<Recognize>) userService.findUserRecognizeforAllBadges(loggedInUser.getFirstName());
-        System.out.println("----------------" + userRecognizeList);
+
+        if (loggedInUser == null) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
+        List<Recognize> userRecognizeList = userService.findUserRecognizeforAllBadges(loggedInUser.getFirstName());
         modelAndView.addObject("recognizeList", userRecognizeList);
         modelAndView.setViewName("/badgeIndex");
         return modelAndView;
@@ -213,6 +225,12 @@ public class UserController {
     public ModelAndView showSharedBadges(Recognize userRecognize, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+
+        if (loggedInUser == null) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
         List<Recognize> userRecognizeList = userService.findUserRecognizeForSharedBadges(loggedInUser.getFirstName());
         modelAndView.addObject("recognizeList", userRecognizeList);
         modelAndView.setViewName("/sharedBadges");
@@ -223,6 +241,12 @@ public class UserController {
     public ModelAndView showreceivedBadges(Recognize userRecognize, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
         User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
+
+        if (loggedInUser == null) {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+
         List<Recognize> userRecognizeList = userService.findUserRecognizeforReceivedBadges(loggedInUser.getFirstName());
         modelAndView.addObject("recognizeList", userRecognizeList);
         modelAndView.setViewName("/receivedBadges");
