@@ -1,9 +1,6 @@
 package com.ttn.springboot.reapdemo.controller;
 
-import com.ttn.springboot.reapdemo.entity.Badge;
-import com.ttn.springboot.reapdemo.entity.Recognize;
-import com.ttn.springboot.reapdemo.entity.User;
-import com.ttn.springboot.reapdemo.entity.UserDTO;
+import com.ttn.springboot.reapdemo.entity.*;
 import com.ttn.springboot.reapdemo.service.BadgeService;
 import com.ttn.springboot.reapdemo.service.MailService;
 import com.ttn.springboot.reapdemo.service.RoleService;
@@ -21,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.ttn.springboot.reapdemo.entity.AdminDTO.createAdminUserDTO;
+import static com.ttn.springboot.reapdemo.entity.UserDTO.createUserDTO;
+
 @Controller
 public class UserController {
     @Autowired
@@ -36,6 +36,33 @@ public class UserController {
     public String index() {
         return "login";
     }
+
+    @GetMapping("/adminPanelEdit")
+    public ModelAndView editUser(HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = (User) httpSession.getAttribute("userLoggedIn");
+        User user1 = userService.findByFirstName(user.getFirstName());
+        if (user1.getRoles().get(0).getRole().equals("admin")) {
+            List<User> userList = userService.findAll();
+            modelAndView.addObject("UserDTO", createAdminUserDTO(userList));
+            modelAndView.setViewName("/adminPanelEdit");
+
+        } else {
+            modelAndView.setViewName("login");
+            return modelAndView;
+        }
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/adminPanelEdit", method = RequestMethod.POST)
+    public String updateUserByAdmin(AdminUserDTO adminDTO) {
+        userService.updateUser(adminDTO);
+       /* ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/adminPanelEdit");*/
+        return "redirect:/adminPanelEdit";
+    }
+
 
     @PostMapping("/login")
     public ModelAndView afterLogin(@ModelAttribute("user") @Valid User user, HttpSession httpSession) {
@@ -160,7 +187,7 @@ public class UserController {
         User user1 = userService.findByFirstName(user.getFirstName());
         if (user1.getRoles().get(0).getRole().equals("admin")) {
             List<User> userList = userService.findAll();
-            List<UserDTO> list = UserDTO.createUserDTO(userList);
+            List<UserDTO> list = createUserDTO(userList);
             modelAndView.addObject("userDtoList", list);
             modelAndView.setViewName("adminPanel");
         } else {
@@ -209,11 +236,6 @@ public class UserController {
         int userid = user1.getId();
         return badgeService.getBadgeList(userid);
     }
-
-/*    @GetMapping("/badgeIndex")
-    public String badge() {
-        return "badgeIndex";
-    }*/
 
     @RequestMapping(value = "/badgeIndex", method = RequestMethod.GET)
     public ModelAndView showAllBadges(Recognize userRecognize, HttpSession httpSession) {

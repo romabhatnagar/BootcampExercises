@@ -4,6 +4,8 @@ import com.ttn.springboot.reapdemo.entity.*;
 import com.ttn.springboot.reapdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -25,8 +27,11 @@ public class UserService {
         Badge silver = new Badge("silver", 2);
         Badge bronze = new Badge("bronze", 1);
         user.setBadgeList(new ArrayList<Badge>(Arrays.asList(gold, silver, bronze)));
-//        user.setRecognizes(new ArrayList<Recognize>(Arrays.asList(take)));
         userRepository.save(user);
+    }
+
+    public Role findRolesId(int id) {
+        return userRepository.findRolesId(id);
     }
 
     public User findByEmail(String email) {
@@ -53,15 +58,10 @@ public class UserService {
         return userRepository.findByFirstName(firstname);
     }
 
-   /* public void updateUserBadge(Badge badge, Integer counttoadd) {
-        userRepository.updateBadge(badge.getId(), badge.getCount() + counttoadd, badge.getType());
-    }*/
-
     public void updateUserBadge(Recognize recognize, User user, HttpSession httpSession) {
         String countRecognize = recognize.getCountRecognize();
         User updateUser = findByFirstName(user.getFirstName());
         if (updateUser != null) {
-//            String takenFromUser = updateUser.getFirstName();
             Integer goldCount = updateUser.getGoldEarned();
             Integer silverCount = updateUser.getSilverEarned();
             Integer bronzeCount = updateUser.getBronzeEarned();
@@ -73,9 +73,7 @@ public class UserService {
             } else {
                 updateUser.setSilverEarned(silverCount + 1);
             }
-  /*          String karma = recognize.getKarma();
-            String reason = recognize.getReason();
-            String count = recognize.getCountRecognize();*/
+
             User loggedInUser = (User) httpSession.getAttribute("userLoggedIn");
             recognize.setTimeStamp(new Date());
             recognize.setGivenTo(updateUser.getFirstName());
@@ -109,10 +107,7 @@ public class UserService {
         return userRepository.findRecognizeList();
     }
 
- /*   public List<Recognize> getRecognizeList() {
-        return userRepository.getList();
-    }*/
- public List<Recognize> findUserRecognizeforAllBadges(String name) {
+    public List<Recognize> findUserRecognizeforAllBadges(String name) {
      return userRepository.find(name);
  }
 
@@ -124,5 +119,48 @@ public class UserService {
         return userRepository.findAllByGivenTo(givenTo);
     }
 
+
+    public void updateUser(AdminUserDTO adminDTO) {
+        User userToUpdate = userRepository.findById(adminDTO.getId());
+        if (userToUpdate != null) {
+            List<Badge> badgesList = userRepository.findBadges(userToUpdate.getId());
+            for (Badge userBadges : badgesList) {
+                String badgeType = userBadges.getType();
+                if (badgeType.equals("gold")) {
+                    int badgeCount = adminDTO.getGoldBadgeCount();
+                    int badgeID = userBadges.getId();
+                    updateBadgesCount(badgeType, badgeCount, badgeID);
+                }
+                if (badgeType.equals("silver")) {
+                    int badgeCount = adminDTO.getSilverBadgeCount();
+                    int badgeID = userBadges.getId();
+                    updateBadgesCount(badgeType, badgeCount, badgeID);
+                }
+                if (badgeType.equals("bronze")) {
+                    int badgeCount = adminDTO.getBronzeBadgeCount();
+                    int badgeID = userBadges.getId();
+                    updateBadgesCount(badgeType, badgeCount, badgeID);
+                }
+            }
+            Role userRoleObject = findRolesId(adminDTO.getId());
+            updateRole(userRoleObject.getId(), adminDTO.getRole());
+            updateUserActive(adminDTO.getActive(), userToUpdate.getId());
+        }
+    }
+
+    @Transactional
+    public void updateUserActive(Boolean active, int id) {
+        userRepository.updateUserActive(active, id);
+    }
+
+    @Transactional
+    public void updateRole(int id, String roleToUpdate) {
+        userRepository.updateRole(id, roleToUpdate);
+    }
+
+    @Transactional
+    public void updateBadgesCount(String badgeType, int badgeCount, int badgeID) {
+        userRepository.updateBadgesCount(badgeType, badgeCount, badgeID);
+    }
 
 }

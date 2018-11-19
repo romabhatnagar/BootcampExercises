@@ -8,12 +8,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     List<User> findAll();
+
+    User findById(int id);
 
     User findByEmailAndPassword(String email, String password);
 
@@ -33,6 +36,19 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("update Recognize r set karma=:karma, reason=:reason, countRecognize=:count where id=:recognizeid")
     void updateRecognize(@Param("recognizeid") Integer recognizeid, @Param("karma") String karma, @Param("reason") String reason,
                          @Param("count") String count);
+
+    @Query("select u.roles from User u where u.id = :id")
+    Role findRolesId(@Param("id") int id);
+
+    @Modifying
+    @Transactional
+    @Query("update Role r set r.role = :role where r.id = :id")
+    void updateRole(@Param("id") int id, @Param("role") String roleToUpdate);
+
+    @Modifying
+    @Transactional
+    @Query("update User u set u.isActive = :active where u.id = :id")
+    void updateUserActive(@Param("active") Boolean active, @Param("id") int id);
 
     @Modifying
     @Query(value = "update badge  set count = :count where type = :type and id=:id", nativeQuery = true)
@@ -56,6 +72,13 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query("select r from Recognize r where givenTo= :givenTo")
     List<Recognize> findAllByGivenTo(@Param("givenTo") String givenTo);
+
+    @Modifying
+    @Transactional
+    @Query("update Badge b set b.count = :badgeCount where b.type = :badgeType and b.id = :badgeID")
+    void updateBadgesCount(@Param("badgeType") String badgeType, @Param("badgeCount") int badgeCount, @Param("badgeID") int badgeID);
+
+
 
 }
 

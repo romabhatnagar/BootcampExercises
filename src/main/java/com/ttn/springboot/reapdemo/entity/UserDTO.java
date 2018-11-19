@@ -11,7 +11,8 @@ public class UserDTO {
     private int id;
     private String email;
     private String firstName;
-    private Boolean isactive;
+    private String lastName;
+    private Boolean isActive;
     private int points;
     private int pointsUsed;
     private int gold;
@@ -19,6 +20,22 @@ public class UserDTO {
     private int bronze;
     @ManyToMany
     private List<Role> roleList;
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public List<Role> getRoleList() {
         return roleList;
@@ -50,14 +67,6 @@ public class UserDTO {
 
     public void setFirstName(String name) {
         this.firstName = name;
-    }
-
-    public Boolean getIsactive() {
-        return isactive;
-    }
-
-    public void setIsactive(Boolean isactive) {
-        this.isactive = isactive;
     }
 
     public int getPoints() {
@@ -103,15 +112,17 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String email, String name, Boolean isactive, int points, int pointsUsed, int gold, int silver, int bronze) {
+    public UserDTO(String email, String firstName, String lastName, Boolean isActive, int points, int pointsUsed, int gold, int silver, int bronze, List<Role> roleList) {
         this.email = email;
-        this.firstName = name;
-        this.isactive = isactive;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isActive = isActive;
         this.points = points;
         this.pointsUsed = pointsUsed;
         this.gold = gold;
         this.silver = silver;
         this.bronze = bronze;
+        this.roleList = roleList;
     }
 
     @Override
@@ -119,13 +130,15 @@ public class UserDTO {
         return "UserDTO{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", name='" + firstName + '\'' +
-                ", isactive=" + isactive +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isActive=" + isActive +
                 ", points=" + points +
                 ", pointsUsed=" + pointsUsed +
                 ", gold=" + gold +
                 ", silver=" + silver +
                 ", bronze=" + bronze +
+                ", roleList=" + roleList +
                 '}';
     }
 
@@ -139,11 +152,12 @@ public class UserDTO {
             userDTO.setBronze(user.getBadgeList().get(0).getCount());
             userDTO.setGold(user.getBadgeList().get(2).getCount());
             userDTO.setSilver(user.getBadgeList().get(1).getCount());
-            userDTO.setIsactive(user.getActive());
+            userDTO.setActive(user.getActive());
             userDTO.setRoleList(user.getRoles());
             userDTO.setId(user.getId());
             userDTOList.add(userDTO);
         }
         return userDTOList;
     }
+
 }
